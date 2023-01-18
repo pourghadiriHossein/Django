@@ -17,9 +17,9 @@
   </li>
   <br><li>cd Current venv
     <ul>
-     <br><li>In Windows cmd: myworld\Scripts\activate.bat</li>
-     <br><li>In MacOS: source myworld/bin/activate</li>
-     <br><li>In Linux: source myworld/bin/activate</li>
+     <br><li>In Windows cmd: myVenvName\Scripts\activate.bat</li>
+     <br><li>In MacOS: source myVenvName/bin/activate</li>
+     <br><li>In Linux: source myVenvName/bin/activate</li>
     </ul>
   </li>
   <br><li><a href="https://www.w3schools.com/django/django_install_django.php">Install Django</a>
