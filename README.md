@@ -24,49 +24,41 @@
   </li>
   <br><li><a href="https://www.w3schools.com/django/django_create_project.php">Django Create Project</a>
     <ul>
-     <br><li>Create Project with additional folder : django-admin startproject myNewProject</li>
-     <br><li>Create Project without additional folder : django-admin startproject myNewProject .</li>
+     <br><li>Create Project without additional folder : django-admin startproject config .</li>
     </ul>
   </li>
-  <br><li>Learn manage.py step by step
+  <br><li>Create home app
     <ul>
-     <br><li>In Windows: py manage.py</li>
-     <br><li>In MacOS: python manage.py</li>
-     <br><li>In Linux: python3 manage.py</li>
+     <br><li>In Windows: py manage.py startapp homePage</li>
+     <br><li>In MacOS: python manage.py startapp homePage</li>
+     <br><li>In Linux: python3 manage.py startapp homePage</li>
     </ul>
   </li>
-  <br><li>Create first app
+  <br><li>set homePage app in config\settings.py
     <ul>
-     <br><li>In Windows: py manage.py startapp myFirstApp</li>
-     <br><li>In MacOS: python manage.py startapp myFirstApp</li>
-     <br><li>In Linux: python3 manage.py startapp myFirstApp</li>
+     <br><li>insert 'homePage'</li>
     </ul>
   </li>
-  <br><li>set new app in config\settings.py
-    <ul>
-     <br><li>insert 'myFristApp'</li>
-    </ul>
-  </li>
-  <br><li>Link myFirstApp in config\urls.py
+  <br><li>Link homePage in config\urls.py
     <ul>
      <br><li>import include from django.urls</li>
-     <br><li>add path('myFirstApp/', include('myFirstApp.urls'))</li>
+     <br><li>add path('homePage/', include('homePage.urls'))</li>
     </ul>
   </li>
-  <br><li>Create urls.py file in myFirstApp
+  <br><li>Create urls.py file in homePage
     <ul>
      <br><li>import path from django.urls</li>
      <br><li>import views from .</li>
      <br><li>add urlpatterns list for urls</li>
-     <br><li>add path('hello/', views.hello, name='hello')</li>
+     <br><li>add path('home', views.home, name='home')</li>
     </ul>
   </li>
-  <br><li>Write hello function for myFirstApp
+  <br><li>Write home function for homePage in views.py
     <ul>
      <br><li>import HttpResponse from django.http</li>
      <br><li>import views from .</li>
-     <br><li>Difine a def for hello with request parameter</li>
-     <br><li>Write return HttpResponse('Hello World')</li>
+     <br><li>Difine a def for home with request parameter</li>
+     <br><li>Write return HttpResponse(''' {YOUR HTML FILE} ''')</li>
      <br><li>In Windows: py manage.py runserver</li>
      <br><li>In MacOS: python manage.py runserver</li>
      <br><li>In Linux: python3 manage.py runserver</li>
