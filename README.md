@@ -65,55 +65,47 @@
     </ul>
   </li>
   <br><li>Simple HTML Template
-    <ul>
-     <br><li>
-      <br>
-      '''
-      <br>
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-          <meta charset="UTF-8">
-          <meta http-equiv="X-UA-Compatible" content="IE=edge">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Document</title>
-          <style>
-              *{
-                  font-size: 100px;
+    <pre>
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang="en"&gt;
+    &lt;head&gt;
+      &lt;meta charset="UTF-8"&gt;
+      &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+      &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+      &lt;title&gt;Document&lt;/title&gt;
+      &lt;style&gt;
+          *{
+              font-size: 100px;
+          }
+      &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;label for="likes" id="likes"&gt;0&lt;/label&gt;
+      &lt;input type="button" value="👍" onclick="increse_likes()"&gt;
+      &lt;br&gt;
+      &lt;label for="" id="galb"&gt;❤️&lt;/label&gt;
+      &lt;script&gt;
+          function sleep(ms) {
+              return new Promise(resolve => setTimeout(resolve, ms));
+          }
+          async function increse_likes(){
+              var likes = document.getElementById("likes");
+              n = parseInt(likes.innerHTML);
+              console.log(n);
+              likes.innerHTML = n+1;
+              var size = document.getElementById('galb');
+              for(var i=100; i<120; i++){
+                  size.style.fontSize = i+'px';
+                  await sleep (1)
               }
-          </style>
-      </head>
-      <body>
-          <label for="likes" id="likes">0</label>
-          <input type="button" value="👍" onclick="increse_likes()">
-          <br>
-          <label for="" id="galb">❤️</label>
-          <script>
-              function sleep(ms) {
-                  return new Promise(resolve => setTimeout(resolve, ms));
+              for(var i=120; i>99; i--){
+                  size.style.fontSize = i+'px';
+                  await sleep (1)
               }
-              async function increse_likes(){
-                  var likes = document.getElementById("likes");
-                  n = parseInt(likes.innerHTML);
-                  console.log(n);
-                  likes.innerHTML = n+1;
-                  var size = document.getElementById('galb');
-                  for(var i=100; i<120; i++){
-                      size.style.fontSize = i+'px';
-                      await sleep (1)
-                  }
-                  for(var i=120; i>99; i--){
-                      size.style.fontSize = i+'px';
-                      await sleep (1)
-                  }
-              }
-          </script>
-      </body>
-      </html>
-      <br>
-      '''
-      <br>
-      </li>
-    </ul>
+          }
+      &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    </pre>
   </li>
 </ol>
