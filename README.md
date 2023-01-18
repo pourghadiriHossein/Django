@@ -27,30 +27,91 @@
      <br><li>Create Project without additional folder : django-admin startproject config .</li>
     </ul>
   </li>
-  <br><li>Create home app
+  <br><li>Create car app
     <ul>
-     <br><li>In Windows: py manage.py startapp homePage</li>
-     <br><li>In MacOS: python manage.py startapp homePage</li>
-     <br><li>In Linux: python3 manage.py startapp homePage</li>
+     <br><li>In Windows: py manage.py startapp car</li>
+     <br><li>In MacOS: python manage.py startapp car</li>
+     <br><li>In Linux: python3 manage.py startapp car</li>
     </ul>
   </li>
-  <br><li>set homePage app in config\settings.py
+  <br><li>Create football app
     <ul>
-     <br><li>insert 'homePage'</li>
+     <br><li>In Windows: py manage.py startapp football</li>
+     <br><li>In MacOS: python manage.py startapp football</li>
+     <br><li>In Linux: python3 manage.py startapp football</li>
     </ul>
   </li>
-  <br><li>Link homePage in config\urls.py
+  <br><li>Create musicBand app
+    <ul>
+     <br><li>In Windows: py manage.py startapp musicBand</li>
+     <br><li>In MacOS: python manage.py startapp musicBand</li>
+     <br><li>In Linux: python3 manage.py startapp musicBand</li>
+    </ul>
+  </li>
+  <br><li>set car app in config\settings.py
+    <ul>
+     <br><li>insert 'car'</li>
+    </ul>
+  </li>
+  <br><li>set football app in config\settings.py
+    <ul>
+     <br><li>insert 'football'</li>
+    </ul>
+  </li>
+  <br><li>set musicBand app in config\settings.py
+    <ul>
+     <br><li>insert 'musicBand'</li>
+    </ul>
+  </li>
+  <br><li>Link car in config\urls.py
     <ul>
      <br><li>import include from django.urls</li>
-     <br><li>add path('homePage/', include('homePage.urls'))</li>
+     <br><li>add path('car/', include('car.urls'))</li>
     </ul>
   </li>
-  <br><li>Create urls.py file in homePage
+  <br><li>Link football in config\urls.py
+    <ul>
+     <br><li>import include from django.urls</li>
+     <br><li>add path('football/', include('football.urls'))</li>
+    </ul>
+  </li>
+  <br><li>Link musicBand in config\urls.py
+    <ul>
+     <br><li>import include from django.urls</li>
+     <br><li>add path('musicBand/', include('musicBand.urls'))</li>
+    </ul>
+  </li>
+  <br><li>Create urls.py file in car
     <ul>
      <br><li>import path from django.urls</li>
      <br><li>import views from .</li>
      <br><li>add urlpatterns list for urls</li>
-     <br><li>add path('home', views.home, name='home')</li>
+     <br><li>add path('', views.index, name='index')</li>
+     <br><li>add path('bmw/', views.bmw, name='bmw')</li>
+     <br><li>add path('benz/', views.benz, name='benz')</li>
+     <br><li>add path('dodge/', views.dodge, name='dodge')</li>
+    </ul>
+  </li>
+  <br><li>Create urls.py file in football
+    <ul>
+     <br><li>import path from django.urls</li>
+     <br><li>import views from .</li>
+     <br><li>add urlpatterns list for urls</li>
+     <br><li>add path('', views.index, name='index')</li>
+     <br><li>add path('ronaldo/', views.ronaldo, name='ronaldo')</li>
+     <br><li>add path('messi/', views.messi, name='messi')</li>
+     <br><li>add path('karim/', views.karim, name='karim')</li>
+    </ul>
+  </li>
+  <br><li>Create urls.py file in musicBand
+    <ul>
+     <br><li>import path from django.urls</li>
+     <br><li>import views from .</li>
+     <br><li>add urlpatterns list for urls</li>
+     <br><li>add path('', views.index, name='index')</li>
+     <br><li>add path('BTS/', views.BTS, name='BTS')</li>
+     <br><li>add path('Queen/', views.Queen, name='Queen')</li>
+     <br><li>add path('Pink-Floyd/', views.Pink_Floyd, name='Pink_Floyd')</li>
     </ul>
   </li>
   <br><li>Write home function for homePage in views.py
