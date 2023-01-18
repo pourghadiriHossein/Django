@@ -68,7 +68,7 @@
      <br><li>add path('hello/', views.hello, name='hello')</li>
     </ul>
   </li>
-  <br><li>Write hello function for myFirstApp
+  <br><li>Write hello function for myFirstApp views.py
     <ul>
      <br><li>import HttpResponse from django.http</li>
      <br><li>import views from .</li>
