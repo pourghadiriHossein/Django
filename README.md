@@ -94,11 +94,11 @@
      <br><li>add path('Pink-Floyd/', views.Pink_Floyd, name='Pink_Floyd')</li>
     </ul>
   </li>
-  <br><li>Write home function for homePage in views.py
+  <br><li>Write Necessary function for car, football, musicBand in views.py
     <ul>
+     <br><li>import render from django.shortcuts</li>
      <br><li>import HttpResponse from django.http</li>
-     <br><li>import views from .</li>
-     <br><li>Difine a def for home with request parameter</li>
+     <br><li>Difine a def for Necessary function with request parameter</li>
      <br><li>Write return HttpResponse(''' {YOUR HTML FILE} ''')</li>
      <br><li>In Windows: py manage.py runserver</li>
      <br><li>In MacOS: python manage.py runserver</li>
@@ -109,43 +109,66 @@
     <pre>
     &lt;!DOCTYPE html&gt;
     &lt;html lang="en"&gt;
-    &lt;head&gt;
-      &lt;meta charset="UTF-8"&gt;
-      &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
-      &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-      &lt;title&gt;Document&lt;/title&gt;
-      &lt;style&gt;
-          *{
-              font-size: 100px;
-          }
-      &lt;/style&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-      &lt;label for="likes" id="likes"&gt;0&lt;/label&gt;
-      &lt;input type="button" value="👍" onclick="increse_likes()"&gt;
-      &lt;br&gt;
-      &lt;label for="" id="galb"&gt;❤️&lt;/label&gt;
-      &lt;script&gt;
-          function sleep(ms) {
-              return new Promise(resolve => setTimeout(resolve, ms));
-          }
-          async function increse_likes(){
-              var likes = document.getElementById("likes");
-              n = parseInt(likes.innerHTML);
-              console.log(n);
-              likes.innerHTML = n+1;
-              var size = document.getElementById('galb');
-              for(var i=100; i<120; i++){
-                  size.style.fontSize = i+'px';
-                  await sleep (1)
-              }
-              for(var i=120; i>99; i--){
-                  size.style.fontSize = i+'px';
-                  await sleep (1)
-              }
-          }
-      &lt;/script&gt;
-    &lt;/body&gt;
+        &lt;head&gt;
+            &lt;meta charset="UTF-8"&gt;
+            &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+            &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+            &lt;title&gt;Car&lt;/title&gt;
+            &lt;style&gt;
+                * {
+                  outline: 0;
+                  margin: 0;
+                  border: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+                }
+                body {
+                  background-image: url(https://coolthemestores.com/wp-content/uploads/2021/10/neon-cars-wallpaper-background.jpg);
+                  background-size: cover;
+                  background-repeat: no-repeat;
+                }
+                .list-background {
+                  width: 40%;
+                  margin: 2% auto;
+                  min-height: 400px;
+                  background-color: rgba(240, 240, 240, 0.5);
+                  padding: 2%;
+                  text-align: center;
+                }
+                .guide {
+                  font-size: xx-large;
+                  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                  font-weight: bold;
+                  margin: 3% 0;
+                }
+                .list {
+                  list-style: none;
+                }
+                .item {
+                  font-size: 26px;
+                  font-weight: bold;
+                  font-style: italic;
+                  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                  letter-spacing: 2px;
+                  margin: 5% auto;
+                  background-image: linear-gradient(to left, rgb(189, 51, 189), rgb(103, 207, 207));
+                  width: 40%;
+                  padding: 3%;
+                  border-radius: 4px;
+                  color: white;
+                }
+            &lt;/style&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;div class="list-background"&gt;
+                &lt;p class="guide"&gt;Use This List Car In Route&lt;/p&gt;
+                &lt;ul class="list"&gt;
+                  &lt;li class="item"&gt;bmw&lt;/li&gt;
+                  &lt;li class="item"&gt;benz&lt;/li&gt;
+                  &lt;li class="item"&gt;doge&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/body&gt;
     &lt;/html&gt;
     </pre>
   </li>
