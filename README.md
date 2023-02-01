@@ -105,7 +105,7 @@
      <br><li>In Linux: python3 manage.py runserver</li>
     </ul>
   </li>
-  <br><li>Simple HTML Template
+  <br><li>Simple HTML Template For Index
     <pre>
     &lt;!DOCTYPE html&gt;
     &lt;html lang="en"&gt;
@@ -168,6 +168,36 @@
                   &lt;li class="item"&gt;{Your Item}&lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/div&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+    </pre>
+  </li>
+  <br><li>Simple HTML Template for Item
+    <pre>
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang="en"&gt;
+        &lt;head&gt;
+            &lt;meta charset="UTF-8"&gt;
+            &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+            &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+            &lt;title&gt;BMW&lt;/title&gt;
+            &lt;style&gt;
+                * {
+                  outline: 0;
+                  margin: 0;
+                  border: 0;
+                  padding: 0;
+                  box-sizing: border-box;
+                }
+                body {
+                  background-image: url({your Image Address});
+                  background-size: cover;
+                  background-repeat: no-repeat;
+                }
+            &lt;/style&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            
         &lt;/body&gt;
     &lt;/html&gt;
     </pre>
