@@ -107,6 +107,7 @@
   </li>
   <br><li>Simple HTML Template
     <pre>
+    
     &lt;!DOCTYPE html&gt;
     &lt;html lang="en"&gt;
         &lt;head&gt;
@@ -123,7 +124,7 @@
                   box-sizing: border-box;
                 }
                 body {
-                  background-image: url(https://coolthemestores.com/wp-content/uploads/2021/10/neon-cars-wallpaper-background.jpg);
+                  background-image: url({Your Image Path});
                   background-size: cover;
                   background-repeat: no-repeat;
                 }
@@ -161,11 +162,11 @@
         &lt;/head&gt;
         &lt;body&gt;
             &lt;div class="list-background"&gt;
-                &lt;p class="guide"&gt;Use This List Car In Route&lt;/p&gt;
+                &lt;p class="guide"&gt;Use This List {Your List Name} In Route&lt;/p&gt;
                 &lt;ul class="list"&gt;
-                  &lt;li class="item"&gt;bmw&lt;/li&gt;
-                  &lt;li class="item"&gt;benz&lt;/li&gt;
-                  &lt;li class="item"&gt;doge&lt;/li&gt;
+                  &lt;li class="item"&gt;{Your Item}&lt;/li&gt;
+                  &lt;li class="item"&gt;{Your Item}&lt;/li&gt;
+                  &lt;li class="item"&gt;{Your Item}&lt;/li&gt;
                 &lt;/ul&gt;
             &lt;/div&gt;
         &lt;/body&gt;
