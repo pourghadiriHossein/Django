@@ -148,7 +148,7 @@
                   font-size: 26px;
                   font-weight: bold;
                   font-style: italic;
-                  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                  font-family: 'Lucida Sans';
                   letter-spacing: 2px;
                   margin: 5% auto;
                   background-image: linear-gradient(to left, rgb(189, 51, 189), rgb(103, 207, 207));
@@ -190,14 +190,13 @@
                   box-sizing: border-box;
                 }
                 body {
-                  background-image: url({your Image Address});
+                  background-image: url({your Image Path});
                   background-size: cover;
                   background-repeat: no-repeat;
                 }
             &lt;/style&gt;
         &lt;/head&gt;
         &lt;body&gt;
-            
         &lt;/body&gt;
     &lt;/html&gt;
     </pre>
