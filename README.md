@@ -66,6 +66,7 @@
   </li>
   <br><li>Simple HTML Template
     <pre>
+    
     &lt;!DOCTYPE html&gt;
     &lt;html lang="en"&gt;
     &lt;head&gt;
