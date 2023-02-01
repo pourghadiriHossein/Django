@@ -50,34 +50,14 @@
   </li>
   <br><li>set car app in config\settings.py
     <ul>
-     <br><li>insert 'car'</li>
-    </ul>
-  </li>
-  <br><li>set football app in config\settings.py
-    <ul>
-     <br><li>insert 'football'</li>
-    </ul>
-  </li>
-  <br><li>set musicBand app in config\settings.py
-    <ul>
-     <br><li>insert 'musicBand'</li>
+     <br><li>insert 'car', 'football', 'musicBand'</li>
     </ul>
   </li>
   <br><li>Link car in config\urls.py
     <ul>
      <br><li>import include from django.urls</li>
      <br><li>add path('car/', include('car.urls'))</li>
-    </ul>
-  </li>
-  <br><li>Link football in config\urls.py
-    <ul>
-     <br><li>import include from django.urls</li>
      <br><li>add path('football/', include('football.urls'))</li>
-    </ul>
-  </li>
-  <br><li>Link musicBand in config\urls.py
-    <ul>
-     <br><li>import include from django.urls</li>
      <br><li>add path('musicBand/', include('musicBand.urls'))</li>
     </ul>
   </li>
