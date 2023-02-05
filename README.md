@@ -34,12 +34,12 @@
      <br><li>In Linux: python3 manage.py startapp car</li>
     </ul>
   </li>
-  <br><li>set car app in config\settings.py
+  <br><li>set webPage app in config\settings.py
     <ul>
      <br><li>insert 'webPage'</li>
     </ul>
   </li>
-  <br><li>Link car in config\urls.py
+  <br><li>Link webPage in config\urls.py
     <ul>
      <br><li>import include from django.urls</li>
      <br><li>add path('webPage/', include('webPage.urls'))</li>
@@ -53,18 +53,7 @@
      <br><li>Create laravel.html File</li>
     </ul>
   </li>
-  <br><li>Create urls.py file in webPage
-    <ul>
-     <br><li>import path from django.urls</li>
-     <br><li>import views from .</li>
-     <br><li>add urlpatterns list for urls</li>
-     <br><li>add path('', views.index, name='index')</li>
-     <br><li>add path('bmw/', views.bmw, name='bmw')</li>
-     <br><li>add path('benz/', views.benz, name='benz')</li>
-     <br><li>add path('dodge/', views.dodge, name='dodge')</li>
-    </ul>templates
-  </li>
-  <br><li>Create urls.py file in wenPage App
+  <br><li>Create urls.py file in webPage App
     <ul>
      <br><li>import path from django.urls</li>
      <br><li>import views from .</li>
