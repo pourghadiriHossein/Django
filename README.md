@@ -181,9 +181,18 @@
     &lt;/html&gt;
     </pre>
   </li>
-  <br><li>Simple HTML Template For Sub Category
+  <br><li>URL Command In Django Template
     <pre>
     
+      {% url 'Your URL Name' %}
+    </pre>
+  </li>
+  <br><li>Set Condition and Load Data Commands In Django Template
+    <pre>
+    
+      {% for student in  students%}
+        {{ student.id }}
+      {% endfor %}
     </pre>
   </li>
 </ol>
