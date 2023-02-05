@@ -64,7 +64,7 @@
      <br><li>add path('dodge/', views.dodge, name='dodge')</li>
     </ul>templates
   </li>
-  <br><li>Create urls.py file in football
+  <br><li>Create urls.py file in wenPage App
     <ul>
      <br><li>import path from django.urls</li>
      <br><li>import views from .</li>
