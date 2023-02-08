@@ -29,9 +29,9 @@
   </li>
   <br><li>Create webPage app
     <ul>
-     <br><li>In Windows: py manage.py startapp car</li>
-     <br><li>In MacOS: python manage.py startapp car</li>
-     <br><li>In Linux: python3 manage.py startapp car</li>
+     <br><li>In Windows: py manage.py startapp webPage</li>
+     <br><li>In MacOS: python manage.py startapp webPage</li>
+     <br><li>In Linux: python3 manage.py startapp webPage</li>
     </ul>
   </li>
   <br><li>set webPage app in config\settings.py
