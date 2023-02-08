@@ -114,7 +114,7 @@
         &lt;nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="nav"&gt;
             &lt;div class="container-fluid"&gt;
                 &lt;a class="navbar-brand" href="javascript:void(0)"&gt;
-                    &lt;img src="{% static 'image/logo.png' %}" alt="logo" width="40px"&gt;
+                    &lt;img src="{YOUR IMAGE Path}" alt="logo" width="40px"&gt;
                 &lt;/a&gt;
                 &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar"&gt;
                 &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
@@ -151,16 +151,16 @@
             &lt;!-- The slideshow/carousel --&gt;
             &lt;div class="carousel-inner"&gt;
               &lt;div class="carousel-item active"&gt;
-                &lt;img src="{% static 'image/image1.avif' %}" alt="image1" class="d-block" style="width:100%; height: 93vh;"&gt;
+                &lt;img src="{YOUR IMAGE Path}" alt="image1" class="d-block" style="width:100%; height: 93vh;"&gt;
               &lt;/div&gt;
               &lt;div class="carousel-item"&gt;
-                &lt;img src="{% static 'image/image2.jpg' %}" alt="image2" class="d-block" style="width:100%; height: 93vh;"&gt;
+                &lt;img src="{YOUR IMAGE Path}" alt="image2" class="d-block" style="width:100%; height: 93vh;"&gt;
               &lt;/div&gt;
               &lt;div class="carousel-item"&gt;
-                &lt;img src="{% static 'image/image3.jpg' %}" alt="image3" class="d-block" style="width:100%; height: 93vh;"&gt;
+                &lt;img src="{YOUR IMAGE Path}" alt="image3" class="d-block" style="width:100%; height: 93vh;"&gt;
               &lt;/div&gt;
               &lt;div class="carousel-item"&gt;
-                &lt;img src="{% static 'image/image4.jpg' %}" alt="image4" class="d-block" style="width:100%; height: 93vh;"&gt;
+                &lt;img src="{YOUR IMAGE Path}" alt="image4" class="d-block" style="width:100%; height: 93vh;"&gt;
               &lt;/div&gt;
             &lt;/div&gt;
             &lt;!-- Left and right controls/icons --&gt;
@@ -175,16 +175,14 @@
     &lt;/html&gt;
     </pre>
   </li>
-  <br><li>URL Command In Django Template
+  <br><li>load Static File Command In Django Template
     <pre>
-      {% url 'Your URL Name' %}
+      {% load static %}
     </pre>
   </li>
-  <br><li>Set Condition and Load Data Commands In Django Template
+  <br><li>How to Load Static File in href Or src In Django Template
     <pre>
-      {% for student in  students%}
-        {{ student.id }}
-      {% endfor %}
+      {% static 'folder-name/file-name.extension' %}
     </pre>
   </li>
 </ol>
