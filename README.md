@@ -74,7 +74,6 @@
      <br><li>
       Template context Variable<br>
       <pre>
-      
       context = {
         'key': 'value'
       }
