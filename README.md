@@ -143,6 +143,44 @@
     </ul>
   </li>
   
+  <br><li>Write new Class for post App in tests.py
+    <ul>
+     <br><li>import reverse from django.shortcuts</li>
+     <br><li>import Post from .models</li>
+     <br>
+      <pre>
+      class HarChiDostDari(TestCase):
+        def setUp(self):
+            self.post = Post.objects.create(
+                title = 'test',
+                description = 'test aval',
+                image = 'no image',
+                creator = 'hossein',
+                create_at = '2020-11-11 10:43',
+            )
+        #one
+        def test_find_url(self): #Error
+            response = self.client.get('/')
+            self.assertEqual(response.status_code, 200)
+        #two
+        def test_finding_url_by_name(self): #OK
+            response = self.client.get(reverse('index'))
+            self.assertEqual(response.status_code, 200)
+        #three
+        def test_finding_post_title_in_page(self): #OK
+            response = self.client.get(reverse('index'))
+            self.assertContains(response, self.post.title)
+            self.assertEqual(self.post.title, 'test')
+      </pre>
+    </ul>
+  </li>
+  <br><li>Run Test in Django Project
+    <ul>
+     <br><li>In Windows: py manage.py test</li>
+     <br><li>In MacOS: python manage.py test</li>
+     <br><li>In Linux: python3 manage.py test</li>
+    </ul>
+  </li>
   <br><li>Simple HTML Template For Index
     <pre>
     &lt;!DOCTYPE html&gt;
@@ -164,70 +202,28 @@
                 &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar"&gt;
                 &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
                 &lt;/button&gt;
-                &lt;div class="collapse navbar-collapse" id="collapsibleNavbar"&gt;
-                &lt;ul class="navbar-nav"&gt;
-                    &lt;li class="nav-item"&gt;
-                    &lt;a class="nav-link text-light" href="javascript:void(0)" onclick="red()"&gt;Red&lt;/a&gt;
-                    &lt;/li&gt;
-                    &lt;li class="nav-item"&gt;
-                    &lt;a class="nav-link text-light" href="javascript:void(0)" onclick="blue()"&gt;Blue&lt;/a&gt;
-                    &lt;/li&gt;
-                    &lt;li class="nav-item"&gt;
-                    &lt;a class="nav-link text-light" href="javascript:void(0)" onclick="yellow()"&gt;Yellow&lt;/a&gt;
-                    &lt;/li&gt;
-                    &lt;li class="nav-item"&gt;
-                        &lt;a class="nav-link text-light" href="javascript:void(0)" onclick="cyan()"&gt;Cyan&lt;/a&gt;
-                    &lt;/li&gt; 
-                    &lt;li class="nav-item"&gt;
-                        &lt;a class="nav-link text-light" href="javascript:void(0)" onclick="gray()"&gt;Gray&lt;/a&gt;
-                    &lt;/li&gt;    
-                &lt;/ul&gt;
-                &lt;/div&gt;
             &lt;/div&gt;
         &lt;/nav&gt;
-        &lt;div id="demo" class="carousel slide" data-bs-ride="carousel"&gt;
-            &lt;!-- Indicators/dots --&gt;
-            &lt;div class="carousel-indicators"&gt;
-              &lt;button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"&gt;&lt;/button&gt;
-              &lt;button type="button" data-bs-target="#demo" data-bs-slide-to="1"&gt;&lt;/button&gt;
-              &lt;button type="button" data-bs-target="#demo" data-bs-slide-to="2"&gt;&lt;/button&gt;
-              &lt;button type="button" data-bs-target="#demo" data-bs-slide-to="3"&gt;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;!-- The slideshow/carousel --&gt;
-            &lt;div class="carousel-inner"&gt;
-              &lt;div class="carousel-item active"&gt;
-                &lt;img src="{YOUR IMAGE Path}" alt="image1" class="d-block" style="width:100%; height: 93vh;"&gt;
+        &lt;div class="container-sm mt-5"&gt;
+          &lt;div class="row gap-5 justify-content-center"&gt;
+              {% for post in posts %}
+              &lt;div class="col-lg-3 card"&gt;
+                  &lt;img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap" style="height:200px;"&gt;
+                  &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title text-center"&gt;{{ post.title }}&lt;/h5&gt;
+                    &lt;p class="card-text text-center"&gt;{{ post.description }}&lt;/p&gt;
+                  &lt;/div&gt;
+                  &lt;ul class="list-group list-group-flush"&gt;
+                    &lt;li class="list-group-item"&gt;{{ post.creator }}&lt;/li&gt;
+                  &lt;div class="card-body"&gt;
+                    &lt;span class="card-link"&gt;{{ post.create_at }}&lt;/span&gt;
+                  &lt;/div&gt;
               &lt;/div&gt;
-              &lt;div class="carousel-item"&gt;
-                &lt;img src="{YOUR IMAGE Path}" alt="image2" class="d-block" style="width:100%; height: 93vh;"&gt;
-              &lt;/div&gt;
-              &lt;div class="carousel-item"&gt;
-                &lt;img src="{YOUR IMAGE Path}" alt="image3" class="d-block" style="width:100%; height: 93vh;"&gt;
-              &lt;/div&gt;
-              &lt;div class="carousel-item"&gt;
-                &lt;img src="{YOUR IMAGE Path}" alt="image4" class="d-block" style="width:100%; height: 93vh;"&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;!-- Left and right controls/icons --&gt;
-            &lt;button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev"&gt;
-              &lt;span class="carousel-control-prev-icon">&lt;/span&gt;
-            &lt;/button&gt;
-            &lt;button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next"&gt;
-              &lt;span class="carousel-control-next-icon"&gt;&lt;/span&gt;
-            &lt;/button&gt;
-        &lt;/div&gt;
+              {% endfor %}
+          &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/body&gt;
     &lt;/html&gt;
-    </pre>
-  </li>
-  <br><li>load Static File Command In Django Template
-    <pre>
-      {% load static %}
-    </pre>
-  </li>
-  <br><li>How to Load Static File in href Or src In Django Template
-    <pre>
-      {% static 'folder-name/file-name.extension' %}
     </pre>
   </li>
 </ol>
