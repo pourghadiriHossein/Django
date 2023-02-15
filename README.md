@@ -78,6 +78,7 @@
      <br><li>return request with your target HTML file by render function</li>
      <br><li>With context: return render(request, '{Your Target HTML File}', context)</li>
      <br><li>
+      <pre>
       def index(request):
         context = {
             'posts' : ''
@@ -134,9 +135,9 @@
   <br><li>Update index function for post App in views.py
     <ul>
      <br><li>import models from .</li>
-     <br><li>add new query for post and add to context</li>
+     <br><li>add new query for post views and add to context</li>
      <br><li>
-      def index(request):
+      <pre>
         posts = models.Post.objects.all()
       </pre>
       </li>
