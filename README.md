@@ -48,22 +48,6 @@ python3 -m pip install Django
 django-admin startproject myNewProject .
 ```
 
-## Learn manage.py step by step
-### In Windows
-```bash
-py manage.py
-```
-
-### In MacOS
-```bash
-python manage.py
-```
-
-### In Linux
-```bash
-python3 manage.py
-```
-
 ## Create app homePage
 ### In Windows
 ```bash
