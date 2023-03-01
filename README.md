@@ -1,136 +1,213 @@
 # how to Use Media and SuperUser and Models and Test in Django Template
 
-<ol>
-  <br><li><a href="https://www.w3schools.com/django/django_create_virtual_environment.php">Create Virtual Environment</a>
-    <ul>
-     <br><li>In Windows: py -m venv venv</li>
-     <br><li>In MacOS: python -m venv venv</li>
-     <br><li>In Linux: python3 -m venv venv</li>
-    </ul>
-  </li>
-  <br><li>cd Current venv
-    <ul>
-     <br><li>In Windows cmd: venv\Scripts\activate.bat</li>
-     <br><li>In MacOS: source venv/bin/activate</li>
-     <br><li>In Linux: source venv/bin/activate</li>
-    </ul>
-  </li>
-  <br><li><a href="https://www.w3schools.com/django/django_install_django.php">Install Django</a>
-    <ul>
-     <br><li>In Windows: py -m pip install Django</li>
-     <br><li>In MacOS: python -m pip install Django</li>
-     <br><li>In Linux: python3 -m pip install Django</li>
-    </ul>
-  </li>
-  <br><li><a href="https://www.w3schools.com/django/django_create_project.php">Django Create Project</a>
-    <ul>
-     <br><li>Create Project without additional folder : django-admin startproject config .</li>
-    </ul>
-  </li>
-  <br><li>Create post app
-    <ul>
-     <br><li>In Windows: py manage.py startapp post</li>
-     <br><li>In MacOS: python manage.py startapp post</li>
-     <br><li>In Linux: python3 manage.py startapp post</li>
-    </ul>
-  </li>
-  <br><li>set post app in config\settings.py
-    <ul>
-     <br><li>insert 'post'</li>
-    </ul>
-  </li>
-  <br><li>Add Media Repository and Configuration in config\settings.py
-     <br>
-     <pre>
-     MEDIA_URL = "media/"
-     MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
-     </pre>
-  </li>
-  <br><li>Link post in config\urls.py
-    <ul>
-     <br><li>import include from django.urls</li>
-     <br><li>import settings from django.conf</li>
-     <br><li>import static from django.conf.urls.static</li>
-     <br><li>add path('post/', include('post.urls'))</li>
-     <br><li>add Static like this
-     <br>
-     <pre>
-     urlpatterns = [
-        path('admin/', admin.site.urls),
-        path('post/', include('post.urls')),
-     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-     </pre>
-     </li>
-    </ul>
-  </li>
-  <br><li>Create urls.py file in post App
-    <ul>
-     <br><li>import path from django.urls</li>
-     <br><li>import views from .</li>
-     <br><li>add urlpatterns list for urls</li>
-     <br><li>add path('', views.index, name='index')</li>
-    </ul>
-  </li>
-  <br><li>Write Necessary function for post App in views.py
-    <ul>
-     <br><li>import render from django.shortcuts</li>
-     <br><li>Difine a def for Necessary function with request parameter</li>
-     <br><li>return request with your target HTML file by render function</li>
-     <br><li>With context: return render(request, '{Your Target HTML File}', context)</li>
-     <br><li>
-      <pre>
-      def index(request):
-        context = {
-            'posts' : ''
-        }
-        return render(request, 'index.html', context)
-      </pre>
-      </li>
-    </ul>
-  </li>
-  <br><li>Write Post Models Detail in post\models.py
-     <br>
-     <pre>
-     class Post(models.Model):
-        title = models.CharField(max_length=20)
-        description = models.TextField()
-        image = models.ImageField(upload_to='upload')
-        creator = models.CharField(max_length=40)
-        create_at = models.DateTimeField()
-        # model label part
-        def __str__(self):
-            return f"Post Title is: {self.title}"
-     </pre>
-  </li>
-  <br><li>Add Admin Index Detail in post\admin.py
-     <br>
-     <pre>
-     from .models import Post
-     # add new item
-     admin.site.register(Post)
-     </pre>
-  </li>
-  <br><li>Make Migrations for post app
-    <ul>
-     <br><li>In Windows: py manage.py makemigrations post</li>
-     <br><li>In MacOS: python manage.py makemigrations post</li>
-     <br><li>In Linux: python3 manage.py makemigrations post</li>
-    </ul>
-  </li>
-  <br><li>Make Migrate for Project
-    <ul>
-     <br><li>In Windows: py manage.py migrate</li>
-     <br><li>In MacOS: python manage.py migrate</li>
-     <br><li>In Linux: python3 manage.py migrate</li>
-    </ul>
-  </li>
-  <br><li>Create Super User
-    <ul>
-     <br><li>In Windows: py manage.py createsuperuser</li>
-     <br><li>In MacOS: python manage.py createsuperuser</li>
-     <br><li>In Linux: python3 manage.py createsuperuser</li>
-    </ul>
-  </li>
+## <a href="https://www.w3schools.com/django/django_create_virtual_environment.php">Create Virtual Environment</a>
+### In Windows
+```bash
+py -m venv myVenvName
+```
+### In MacOS
+```bash
+python -m venv myVenvName
+```
+### In Linux
+```bash
+python3 -m venv myVenvName
+```
+
+## cd Current venv
+### In Windows cmd
+```bash
+myVenvName\Scripts\activate.bat
+```
+### In MacOS
+```bash
+source myVenvName/bin/activate
+```
+### In Linux
+```bash
+source myVenvName/bin/activate
+```
+
+## <a href="https://www.w3schools.com/django/django_install_django.php">Install Django</a>
+### In Windows
+```bash
+py -m pip install Django
+```
+### In MacOS
+```bash
+python -m pip install Django
+```
+### In Linux
+```bash
+python3 -m pip install Django
+```
+
+## <a href="https://www.w3schools.com/django/django_create_project.php">Django Create Project</a>
+### Create Project without additional folder
+```bash
+django-admin startproject myNewProject .
+```
+
+## Create app post
+### In Windows
+```bash
+py manage.py startapp post
+```
+### In MacOS
+```bash
+python manage.py startapp post
+```
+### In Linux
+```bash
+python3 manage.py startapp post
+```
+
+## set new app in config\settings.py - insert 'post'
+
+## Add Media Repository and Configuration in config\settings.py
+```bash
+MEDIA_URL = "media/"
+MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
+```
+
+## Link post in config\urls.py
+```bash
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('post/', include('post.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+## Create templates Folder in homePage App
+### Create index.html File
+
+
+## Create urls.py file in post App
+```bash
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+```
+
+
+## Write hello function for post views.py
+```bash
+from django.shortcuts import render
+
+def index(request):
+    context = {
+        'posts' : posts
+    }
+    return render(request, 'index.html', context)
+```
+
+## Write Post Models Detail in post\models.py
+```bash
+from django.db import models
+
+class Post(models.Model):
+    title = models.CharField(max_length=20)
+    description = models.TextField()
+    image = models.ImageField(upload_to='upload')
+    creator = models.CharField(max_length=40)
+    create_at = models.DateTimeField()
+
+    def __str__(self):
+        return f"Post Title is: {self.title}"
+```
+
+## Add Admin Index Detail in post\admin.py
+```bash
+from django.contrib import admin
+from .models import Post
+
+admin.site.register(Post)
+```
+
+## Make Migrations for post app
+### In Windows
+```bash
+py manage.py makemigrations post
+```
+### In MacOS
+```bash
+python manage.py makemigrations post
+```
+### In Linux
+```bash
+python3 manage.py makemigrations post
+```
+
+## Make Migrate for Project
+### In Windows
+```bash
+py manage.py migrate
+```
+### In MacOS
+```bash
+python manage.py migrate
+```
+### In Linux
+```bash
+python3 manage.py migrate
+```
+
+## Create Super User
+### In Windows
+```bash
+py manage.py createsuperuser
+```
+### In MacOS
+```bash
+python manage.py createsuperuser
+```
+### In Linux
+```bash
+python3 manage.py createsuperuser
+```
+
+
+## load Static File Command In Django Template
+```bash
+{% load static %}
+```
+
+
+## How to Load Static File in href Or src In Django Template
+```bash
+{% static 'folder-name/file-name.extension' %}
+```
+
+## Run Your App
+### In Windows
+```bash
+py manage.py runserver
+```
+### In MacOS
+```bash
+python manage.py runserver
+```
+### In Linux
+```bash
+python3 manage.py runserver
+```
+
+## Simple HTML Template
+```bash
+
+```
+
+
+  
+  
   <br><li>Add Three Post In Admin Panel</li>
   <br><li>Update index function for post App in views.py
     <ul>
