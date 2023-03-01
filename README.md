@@ -64,7 +64,7 @@ python manage.py
 python3 manage.py
 ```
 
-## Create app
+## Create app homePage
 ### In Windows
 ```bash
 py manage.py startapp homePage
