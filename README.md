@@ -201,10 +201,6 @@ python manage.py runserver
 python3 manage.py runserver
 ```
 
-## Simple HTML Template
-```bash
-
-```
 
 ## Add Three Post In Admin Panel
 
