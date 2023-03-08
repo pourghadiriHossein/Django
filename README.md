@@ -1,1 +1,1 @@
-# WELCOME TO DJANGO TERM
+# Weblog Template
