@@ -73,10 +73,10 @@ add path('webPage/', include('webPage.urls'))
 ```
 
 ## Create templates Folder in webPage App
-### Create home.html File
-### Create hcj.html File
-### Create django.html File
-### Create laravel.html File
+- ### Create home.html File
+- ### Create hcj.html File
+- ### Create django.html File
+- ### Create laravel.html File
 
 ## Create urls.py file in webPage
 ```bash
