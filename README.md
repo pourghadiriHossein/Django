@@ -83,7 +83,7 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
 
-## Create templates Folder in homePage App
+## Create templates Folder in post App
 - ### Create index.html File
 
 
