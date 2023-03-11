@@ -84,7 +84,7 @@ urlpatterns = [
 ```
 
 ## Create templates Folder in homePage App
-### Create index.html File
+- ### Create index.html File
 
 
 ## Create urls.py file in post App
@@ -134,43 +134,43 @@ admin.site.register(Post)
 ```
 
 ## Make Migrations for post app
-### In Windows
+- ### In Windows
 ```bash
 py manage.py makemigrations post
 ```
-### In MacOS
+- ### In MacOS
 ```bash
 python manage.py makemigrations post
 ```
-### In Linux
+- ### In Linux
 ```bash
 python3 manage.py makemigrations post
 ```
 
 ## Make Migrate for Project
-### In Windows
+- ### In Windows
 ```bash
 py manage.py migrate
 ```
-### In MacOS
+- ### In MacOS
 ```bash
 python manage.py migrate
 ```
-### In Linux
+- ### In Linux
 ```bash
 python3 manage.py migrate
 ```
 
 ## Create Super User
-### In Windows
+- ### In Windows
 ```bash
 py manage.py createsuperuser
 ```
-### In MacOS
+- ### In MacOS
 ```bash
 python manage.py createsuperuser
 ```
-### In Linux
+- ### In Linux
 ```bash
 python3 manage.py createsuperuser
 ```
@@ -188,15 +188,15 @@ python3 manage.py createsuperuser
 ```
 
 ## Run Your App
-### In Windows
+- ### In Windows
 ```bash
 py manage.py runserver
 ```
-### In MacOS
+- ### In MacOS
 ```bash
 python manage.py runserver
 ```
-### In Linux
+- ### In Linux
 ```bash
 python3 manage.py runserver
 ```
@@ -248,15 +248,15 @@ class HarChiDostDari(TestCase):
  
  
 ## Run Test in Django Project
-### In Windows
+- ### In Windows
 ```bash
 py manage.py test
 ```
-### In MacOS
+- ### In MacOS
 ```bash
 python manage.py test
 ```
-### In Linux
+- ### In Linux
 ```bash
 python3 manage.py test
 ```
