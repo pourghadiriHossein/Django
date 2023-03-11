@@ -98,7 +98,7 @@ urlpatterns = [
 ```
 
 
-## Write hello function for post views.py
+## Write index function for post views.py
 ```bash
 from django.shortcuts import render
 
