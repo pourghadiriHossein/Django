@@ -45,7 +45,7 @@ python3 -m pip install Django
 ## <a href="https://www.w3schools.com/django/django_create_project.php">Django Create Project</a>
 ### Create Project without additional folder
 ```bash
-django-admin startproject myNewProject .
+django-admin startproject config .
 ```
 
 ## Create app webPage
