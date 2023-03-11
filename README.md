@@ -73,12 +73,12 @@ add path('homePage/', include('homePage.urls'))
 ```
 
 ## Create templates Folder in homePage App
-### Create index.html File
+- ### Create index.html File
 
 ## Create static Folder in homePage App
-### Create css Folder, then Create style.css
-### Create js Folder, then Create main.js
-### Create image Folder, then Add Four Image For Slide Show and One Image For Logo
+- ### Create css Folder, then Create style.css
+- ### Create js Folder, then Create main.js
+- ### Create image Folder, then Add Four Image For Slide Show and One Image For Logo
 
 ## Create urls.py file in homePage
 ```bash
