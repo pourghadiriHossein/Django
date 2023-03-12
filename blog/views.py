@@ -8,7 +8,6 @@ def post_list_view(request):
     return render(request, 'blog/posts_list.html', context)
 
 def post_detail_view(request, pk):
-    from django.shortcuts import get_object_or_404
     post = get_object_or_404(Post, pk=pk)
     context = { 'post': post }
     return render(request, 'blog/post_detail.html', context)
