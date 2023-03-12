@@ -1,0 +1,58 @@
+{% extends '_base.html' %}
+
+{% block title %}
+post {{ post.title }} detail
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-9">
+
+            <div class="card shadow my-3 p-5">
+                <h1>{{ post.title }}</h1>
+                <p class="small text-muted mt-2">Created on: {{ post.datetime_created }}</p>
+                <p class="mt-2" style="text-align: justify"> {{ post.text }}
+                </p>
+                <p class="small text-muted">Writer: {{ post.author }}</p>
+                <p class="small text-muted mt">Last modified on: {{ post.datetime_modified }}</p>
+            </div>
+            
+            <div class="card shadow my-3 p-5">
+                <h3>Comments:</h3>
+                Comments will be shown here ...
+            </div>
+        
+            <div class="card shadow my-3 p-5">
+                <h3>Add new comment:</h3>
+                <form method="POST">
+                    <div class="form-group py-2">
+                        <label class="py-1" for="author_name">Enter your name:</label>
+                        <input type="text" class="form-control" placeholder="e.g. John Doe" name="author_name">
+                    </div>
+                    <div class="form-group py-2">
+                        <label class="py-1" for="email">Your Email:</label>
+                        <input type="email" class="form-control" placeholder="example@gmail.com" name="email">
+                    </div>
+                    <div class="form-group py-2">
+                        <label class="py-1" for="comment_text">Comment text:</label>
+                        <textarea class="form-control" name="text" rows="3" placeholder="Enter your comment text here..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-1">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card my-3 sticky-top">
+                <h5 class="card-header">About</h5>
+                <div class="card-body">
+                    <p class="card-text";>Poulstar is an institute which help children learn
+                        different programming languagess. Kids and teenager learn how to
+                        code in different programming languages by games and playing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
