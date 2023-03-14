@@ -11,7 +11,7 @@ Create New Post
         <div class="col-9">
             <div class="card shadow my-3 p-5">
                 <h3>Add new Post:</h3>
-                <form method="POST" action="{% url 'create' %}">
+                <form method="POST" action="{% url 'update' post.id %}">
                     {% csrf_token %}
                     <table>
                         {{ form.as_table }}

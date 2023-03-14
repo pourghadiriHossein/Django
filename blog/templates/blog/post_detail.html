@@ -16,6 +16,10 @@ post {{ post.title }} detail
                 </p>
                 <p class="small text-muted">Writer: {{ post.author }}</p>
                 <p class="small text-muted mt">Last modified on: {{ post.datetime_modified }}</p>
+                <div>
+                    <a href = "{% url 'update' post.id %}" class="btn btn-sm btn-warning">Update</a>
+                    <a href = "{% url 'delete' post.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
             </div>
             
             <div class="card shadow my-3 p-5">
