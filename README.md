@@ -11,7 +11,7 @@ class PostForm(forms.ModelForm):
         fields = ['title', 'text', 'author', 'status']
 ```
 
-## Import Forms to views.py blpg app
+## Import Forms to views.py blog app
 ```bash
 from .forms import PostForm
 ```
