@@ -10,7 +10,7 @@ Update Post
     <div class="row">
         <div class="col-9">
             <div class="card shadow my-3 p-5">
-                <h3>Add new Post:</h3>
+                <h3>Update Post:</h3>
                 <form method="POST" action="{% url 'update' post.id %}">
                     {% csrf_token %}
                     <table>
