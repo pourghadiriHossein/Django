@@ -231,7 +231,7 @@ python3 manage.py runserver
 </html>
 ```
 
-## Simple HTML Template For Index
+## Simple HTML Template For Sub Domain
 ```bash
 <!DOCTYPE html>
 <html lang="en">
