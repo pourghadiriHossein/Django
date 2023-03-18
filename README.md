@@ -38,22 +38,33 @@ def post_delete_view(request, pk):
 ```
 - ### Use one of Sample Code for post text
 ```bash
-{% comment %} {{ post.text | truncatewords:2 }} {% endcomment %}
-{% comment %} {{ post.text| upper }} {% endcomment %}
-{% comment %} {{ post.text| lower }} {% endcomment %}
-{% comment %} {{ post.text | capfirst }} {% endcomment %}
-{% comment %} {{ post.text | title }} {% endcomment %}
-{% comment %} {{ post.text | wordcount }} {% endcomment %}
-{% comment %} {{ post.text | linebreaks }} {% endcomment %}
-{% comment %} {{ post.text | linebreaksbr }} {% endcomment %}
+{{ post.text | truncatewords:2 }}
 
-{% comment %} {{ post.text | random }} {% endcomment %}
-{% comment %} {{ post.text | slugify }} {% endcomment %}
-{% comment %} {{ post.text | add:"2" }} {% endcomment %}
-{% comment %} {{ post.text | cut:" " }} {% endcomment %}
+{{ post.text| upper }}
 
-{% comment %} {{ post.text | add_poulstar }} {% endcomment %}
-{% comment %} {{ post.text | add_something:'hello' }} {% endcomment %}
+{{ post.text| lower }}
+
+{{ post.text | capfirst }}
+
+{{ post.text | title }}
+
+{{ post.text | wordcount }}
+
+{{ post.text | linebreaks }}
+
+{{ post.text | linebreaksbr }}
+
+{{ post.text | random }}
+
+{{ post.text | slugify }}
+
+{{ post.text | add:"2" }}
+
+{{ post.text | cut:" " }}
+
+{{ post.text | add_poulstar }}
+
+{{ post.text | add_something:'hello' }}
 ```
 
 ## Create delete_post.html in blog app templates Folder
