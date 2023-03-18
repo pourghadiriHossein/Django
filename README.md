@@ -1,4 +1,6 @@
-# Create, Update and Delete Post in Blog Project
+# Learn Template Tags in Blog Project
+
+## <a href="https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#built-in-filter-reference">Template Tags Refrence</a>
 
 ## Create forms.py in blog app
 ```bash
