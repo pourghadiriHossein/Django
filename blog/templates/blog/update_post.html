@@ -1,0 +1,37 @@
+{% extends '_base.html' %}
+
+{% block title %}
+Update Post
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-9">
+            <div class="card shadow my-3 p-5">
+                <h3>Update Post:</h3>
+                <form method="POST" action="{% url 'update' post.id %}">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_table }}
+                    </table>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card my-3 sticky-top">
+                <h5 class="card-header">About</h5>
+                <div class="card-body">
+                    <p class="card-text";>Poulstar is an institute which help children learn
+                        different programming languagess. Kids and teenager learn how to
+                        code in different programming languages by games and playing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
