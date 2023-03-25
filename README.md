@@ -520,3 +520,58 @@ class PostDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy('posts_list')
 
 ```
+## Make Migrations for post app
+- ### In Windows
+```bash
+py manage.py makemigrations post
+```
+- ### In MacOS
+```bash
+python manage.py makemigrations post
+```
+- ### In Linux
+```bash
+python3 manage.py makemigrations post
+```
+
+## Make Migrate for Project
+- ### In Windows
+```bash
+py manage.py migrate
+```
+- ### In MacOS
+```bash
+python manage.py migrate
+```
+- ### In Linux
+```bash
+python3 manage.py migrate
+```
+
+## Create Super User
+- ### In Windows
+```bash
+py manage.py createsuperuser
+```
+- ### In MacOS
+```bash
+python manage.py createsuperuser
+```
+- ### In Linux
+```bash
+python3 manage.py createsuperuser
+```
+
+## Run Your App
+- ### In Windows
+```bash
+py manage.py runserver
+```
+- ### In MacOS
+```bash
+python manage.py runserver
+```
+- ### In Linux
+```bash
+python3 manage.py runserver
+```
