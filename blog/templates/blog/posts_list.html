@@ -1,0 +1,37 @@
+{% extends '_base.html' %}
+
+{% block title %}
+Posts List
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-9">
+            {% for post in posts %}
+            <div class="card shadow-sm my-3">
+                <div class="card-body">
+                    <h5 class="card-title"> {{ post.title }} </h5>
+                    <h6 class="card-subtitle mb-2 text-muted small py-2"> {{ post.datetime_created }} </h6>
+                    <p class="card-text py-3" style="text-align: justify;">
+                        {{ post.text | truncatewords:3 }}
+                    </p>
+                    <a href = "{% url 'post_detail' post.id %}" class="btn btn-sm btn-outline-success">Read More</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-3">
+            <div class="card my-3 sticky-top">
+                <h5 class="card-header">About</h5>
+                <div class="card-body">
+                    <p class="card-text";>Poulstar is an institute which help children learn
+                        different programming languagess. Kids and teenager learn how to
+                        code in different programming languages by games and playing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
