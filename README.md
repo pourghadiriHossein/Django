@@ -121,7 +121,7 @@ Sign Up
 ```
 
 ## Update settings.py file in config
-- ### Add two in INSTALLED_APPS
+- ### Add two app in INSTALLED_APPS
 ```bash
 INSTALLED_APPS = [
     'django.contrib.admin',
