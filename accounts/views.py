@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 
 def sign_up_view(request):
+    if request.user.is_authenticated:
+        return redirect('book_list')
     if request.method=='POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
