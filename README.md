@@ -308,124 +308,22 @@ urlpatterns = [
 ]
 ```
 
-## accounts app
-- ### Update models.py file
-```bash
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-
-class CustomUser(AbstractUser):
-    age = models.PositiveIntegerField(null=True, blank=True)
-```
-
-- ### Create forms.py file
-```bash
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-
-from .models import CustomUser
-
-class CustomUserCreationForm(UserCreationForm):
-    class Meta:
-        model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('age', )
-
-class CustomUserChangeForm(UserChangeForm):
-    class Meta:
-        model = CustomUser
-        fields = UserChangeForm.Meta.fields
-```
-- ### Update admin.py file
-```bash
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
-
-class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
-    form = CustomUserChangeForm
-    model = CustomUser
-    
-    fieldsets = UserAdmin.fieldsets + (  
-        (None, {'fields': ('age', )}),
-    )
-
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('age', )}),
-    )
-
-    list_display = ['username', 'email', 'age' , 'is_staff']
-    list_display_links = ['username', 'email', 'age' , 'is_staff']
-
-
-admin.site.register(CustomUser, CustomUserAdmin)
-```
+## pages app
 - ### Create urls.py file
 ```bash
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('signup/', views.sign_up_view, name='signup'), 
+    path('', views.home_page_view, name='home'),
 ]
 ```
-
 - ### Update views.py file
 ```bash
-from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm
+from django.shortcuts import render
 
-def sign_up_view(request):
-    if request.method=='POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form })
-```
-
-## Make Migrations
-- ### In Windows
-```bash
-py manage.py makemigrations
-```
-- ### In MacOS
-```bash
-python manage.py makemigrations
-```
-- ### In Linux
-```bash
-python3 manage.py makemigrations
-```
-
-## Make Migrate for Project
-- ### In Windows
-```bash
-py manage.py migrate
-```
-- ### In MacOS
-```bash
-python manage.py migrate
-```
-- ### In Linux
-```bash
-python3 manage.py migrate
-```
-
-## Create Super User
-- ### In Windows
-```bash
-py manage.py createsuperuser
-```
-- ### In MacOS
-```bash
-python manage.py createsuperuser
-```
-- ### In Linux
-```bash
-python3 manage.py createsuperuser
+def home_page_view(request):
+    return render(request, "home.html")
 ```
 
 ## Run Your App
