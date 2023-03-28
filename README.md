@@ -1,8 +1,7 @@
 # Add Create and Update and Delete to books app in Book Store Project
 
 ## books app
-- ### Update book_datail.html in books Directory
-```bash
+- ### Update book_datail.html file
 {% extends '_base.html' %}
 
 {% block page_title %}
