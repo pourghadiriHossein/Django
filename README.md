@@ -2,6 +2,7 @@
 
 ## books app
 - ### Update book_datail.html file
+```bash
 {% extends '_base.html' %}
 
 {% block page_title %}
@@ -35,7 +36,6 @@
         لیست همه کتاب ها
     </a>
 {% endblock content %}
-
 ```
 - ### Create book_create.html file
 ```bash
