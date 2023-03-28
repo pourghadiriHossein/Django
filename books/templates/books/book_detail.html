@@ -17,6 +17,15 @@
     <h4>
         {{ book.price }}
     </h4>
+    {% if user.is_authenticated %}
+    <br>
+    <a class="btn btn-outline-info" href="{% url 'book_update' book.pk %}">
+        ویرایش این کتاب
+    </a>
+    <a class="btn btn-outline-danger" href="{% url 'book_delete' book.pk %}">
+        حذف این کتاب
+    </a>
+    {% endif %}
     <br>
     <a href="{% url 'book_list' %}">
         لیست همه کتاب ها
