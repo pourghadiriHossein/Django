@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from . import models
-from .forms import BookForm
+from .forms import BookForm, CommentForm
 from django.core.paginator import Paginator
 
 def book_list_view(request):
@@ -15,8 +15,21 @@ def book_list_view(request):
 
 def book_detail_view(request, pk):
     book = get_object_or_404(models.Book, pk=pk)
+    comments = book.comments.all()
+    if request.method=="POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.book = book
+            new_comment.user = request.user
+            new_comment.save()
+            comment_form = CommentForm()
+    else:
+        comment_form = CommentForm()
     context = {
-        'book' : book
+        'book': book,
+        'comments': comments,
+        'comment_form': comment_form,
     }
     return render(request, 'books/book_detail.html', context)
 
