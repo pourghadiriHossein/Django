@@ -297,7 +297,8 @@ class BookForm(ModelForm):
 ```
 
 - ### Update views.py file
-```bashfrom django.shortcuts import render, get_object_or_404, redirect
+```bash
+from django.shortcuts import render, get_object_or_404, redirect
 from . import models
 from .forms import BookForm
 from django.core.paginator import Paginator
