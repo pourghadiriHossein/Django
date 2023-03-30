@@ -226,7 +226,7 @@ urlpatterns = [
 </footer>
 {% endblock content %}
 ```
-- ### Update bool_update.html file
+- ### Update book_update.html file
 ```bash
 {% extends '_base.html' %}
 
