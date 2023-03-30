@@ -1,154 +1,29 @@
-# Use Template File for Book Store Project
-
-## Create static Folder in root Directory
-- ### Move css, fonts, icons Folder to static
-
-## Update root templates
-- ### Update _base.html file
-```bash
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block page_title %}{% endblock page_title %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {% block styles %}
-    {% endblock styles %}
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-info" dir="rtl">
-        <div class="container">
-            <a class="navbar-brand">
-                <img src="{% static 'icons/book.png' %}" alt="icon" height="30"
-                     class="d-inline-block align-text-top">
-            </a>
-            <a class="navbar-brand mx-3">کتاب یار</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="{% url 'book_list' %}">خانه</a>
-                    <a class="nav-link" href="{% url 'book_create' %}">اضافه کردن کتاب</a>
-                </div>
-            </div>
-            {% if user.is_authenticated %}
-                <div class="mx-2 text-white"> خوش آمدید  {{ user.username }}
-                <span style="margin: 0 10px;">|</span>
-                <a class="link-light text-decoration-none" href="{% url 'logout' %}">خروج</a></div>
-            {% else %}
-                <div class="link-light text-decoration-none">
-                    <a class="link-light text-decoration-none" href="{% url 'login' %}"> ورود </a>
-                    <span style="margin: 0 10px;">|</span>
-                    <a class="link-light text-decoration-none" href="{% url 'signup' %}"> ثبت نام </a>
-                </div>
-            {% endif %}
-        </div>
-    </nav>   
-    <div class='container mt-5'>
-        {% block content %}
-        {% endblock content %}
-    </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-</body>
-</html>
-```
-- ### Update registration\login.html file
-```bash
-{% extends '_base.html' %}
-
-{% load static %}
-{% load crispy_forms_tags %}
-
-{% block page_title %}
-Login
-{% endblock page_title %}
-{% block styles %}
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock styles %}
-
-{% block content %}
-<div class="d-flex justify-content-center mt-5" dir="rtl">
-    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-xs-6 bg-white m-3 m-sm-5 border rounded px-4 pt-4 pb-3 shadow">
-        <form method="post">
-            {% csrf_token %}
-            <h1 class="text-center">ورود</h1>
-            {{ form|crispy }}
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="mt-2">
-                    <a class="text-decoration-none" href="{% url 'password_reset' %}">فراموشی رمز عبور</a>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-success mt-3 w-100">ورود</button>
-            <div class="line-with-middle-sep">
-                  <span>
-                    یا
-                  </span>
-            </div>
-            <a href="{% url 'signup' %}" class="btn btn-primary mt-2 mb-3 w-100">ثبت نام</a>
-        </form>
-    </div>
-</div>
-{% endblock content %}
-
-```
-- ### Update registration\password_reset_form.html file
-```bash
-{% extends '_base.html' %}
-
-{% load static %}
-{% load crispy_forms_tags %}
-
-{% block page_title %}
-Password Reset
-{% endblock page_title %}
-{% block styles %}
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock styles %}
-
-{% block content %}
-<div class="d-flex justify-content-center mt-5" dir="rtl">
-    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-xs-6 bg-white m-3 m-sm-5 border rounded px-4 pt-4 pb-3 shadow">
-        <form method="post">
-            {% csrf_token %}
-            <h3 class="text-center">بازیابی رمز عبور</h3>
-            {{ form|crispy }}
-            <button type="submit" class="btn btn-success mt-3 w-100">ارسال</button>
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="mt-2">
-                    <a class="text-decoration-none" href="{% url 'login' %}">ورود</a>
-                        یا
-                    <a class="text-decoration-none" href="{% url 'signup' %}">ثبت نام</a>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-{% endblock content %}
-
-```
-
-## pages app
-- ### Update views.py file
-```bash
-from django.shortcuts import render, redirect
-
-def home_page_view(request):
-    return redirect('book_list')
-```
+# Add Media and Pagination for Book Store Project
 
 ## config folder
-- ### Update settings.py file - Add STATICFILES_DIRS
+- ### Update settings.py file - Add Media
 ```bash
-STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
+# media files
+MEDIA_URL = "media/"
+MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 ```
+- ### Update urls.py file
+```bash
+from django.contrib import admin
+from django.urls import path, include
+# from django.shortcuts import render
+from django.conf import settings
+from django.conf.urls.static import static
 
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    # path('', lambda request: render(request, "home.html" ), name='home'),
+    path('', include('pages.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('books/', include('books.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
 ## books app
 - ### Update book_create.html in books Directory
 ```bash
@@ -167,12 +42,13 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
             <div class="card shadow my-3">
                 <h5 class="card-header bg-success text-light px-5">فرم</h5>
                 <div class="px-5 pt-3 pb-5">
-                    <form method="POST" action="{% url 'book_create' %}">
+                    <form method="POST" action="{% url 'book_create' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
                         <input class="btn btn-outline-success mt-3" type="submit" value="ایجاد کتاب">
                     </form>
                 </div>
+                
             </div>
         </div>
         <div class="col-3">
@@ -205,8 +81,10 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
                 <div class="row w-sm-75 w-100">
                     <div class="col-xs-12 col-md-3 d-flex justify-content-center">
                         <div>
-                            <img src="https://newcdn.fidibo.com/images/books/65579_50411_normal.jpg"
+                            {% if book.cover %}
+                            <img class="shadow" src="{{ book.cover.url }}"
                                  class="img-fluid rounded-start" alt="...">
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6 text-center text-md-end mt-md-1 mt-4">
@@ -300,13 +178,15 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
 
 {% block content %}
 <div class="container mt-4">
-    <div class="row flex-row-reverse justify-content-md-center">
-        {% for book in books %}
+    <div class="row flex-row-reverse justify-content-md-start">
+        {% for book in page_obj %}
             <div class="card m-2" style="max-width: 45%">
                 <div class="row g-0 h-100" dir="rtl">
                     <div class="col-md-4">
-                        <img src="https://newcdn.fidibo.com/images/books/69249_94233_normal.jpg"
+                        {% if book.cover %}
+                        <img src="{{ book.cover.url }}"
                             class="img-fluid rounded-start" alt="...">
+                        {% endif %}
                     </div>
                     <div class="col-md-8 h-100">
                         <div class="d-flex flex-column justify-content-between h-100">
@@ -328,13 +208,178 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
         {% endfor %}
     </div>
 </div>
-
+<nav aria-label="Page navigation example">
+    <ul class="pagination mt-3 justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="{% url 'book_list'%}?page={{page_obj.previous_page_number}}">Previous</a></li>
+        {% endif %}
+      <li class="page-item"><a class="page-link" href="">{{ page_obj.number }}</a></li>
+      {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{% url 'book_list'%}?page={{page_obj.next_page_number}}">Next</a></li>
+      {% endif %}
+    </ul>
+</nav>
 <footer class="bg-light text-center text-lg-start mt-5">
   <div class="text-center bg-grey">
       <p>powered by : Poulstar</p>
   </div>
 </footer>
 {% endblock content %}
+```
+- ### Update bool_update.html file
+```bash
+{% extends '_base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block page_title %}
+ویرایش کتاب {{ book.title }}
+{% endblock page_title %}
+
+{% block content %}
+<div class="container mt-4" dir="rtl">
+    <div class="row">
+        <div class="col-9">
+            <div class="card shadow my-3">
+                <h5 class="card-header bg-success text-light px-5">فرم</h5>
+                <div class="px-5 pt-3 pb-5">
+                    <form method="POST" action="{% url 'book_update' book.id%}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input class="btn btn-outline-success mt-3" type="submit" value="ذخیره">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card my-3 shadow">
+                <h5 class="card-header bg-warning text-light">راهنما</h5>
+                <div class="card-body">
+                    <p class="card-text">
+                        اطلاعات کتاب را در فرم این صفحه وارد کنید و سپس بر روی دکمه ذخیره کلیک کنید.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+```
+
+- ### Update models.py
+```bash
+from django.db import models
+from django.urls import reverse
+
+class Book(models.Model):
+    title = models.CharField(max_length=200, verbose_name='عنوان')
+    author = models.CharField(max_length=100, verbose_name='نویسنده')
+    description = models.TextField(verbose_name='توضیحات')
+    price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='قیمت')
+    cover = models.ImageField(upload_to="covers/", verbose_name='عکس جلد', blank=True)
+
+    def __str__(self):
+        return self.title
+    
+    def get_absolute_url(self):
+        return reverse('book_detail', args=[self.id])
+```
+
+- ### Update forms.py file
+```bash
+from django.forms import ModelForm
+from . import models
+
+class BookForm(ModelForm):
+    class Meta:
+        model = models.Book
+        fields = ['title', 'author', 'description', 'price', 'cover']
+```
+
+- ### Update views.py file
+```bashfrom django.shortcuts import render, get_object_or_404, redirect
+from . import models
+from .forms import BookForm
+from django.core.paginator import Paginator
+
+def book_list_view(request):
+    books = models.Book.objects.all()
+    paginator = Paginator(books, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj
+    }
+    return render(request, 'books/book_list.html', context)
+
+def book_detail_view(request, pk):
+    book = get_object_or_404(models.Book, pk=pk)
+    context = {
+        'book' : book
+    }
+    return render(request, 'books/book_detail.html', context)
+
+def book_create_view(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if request.method=='POST':
+        form = BookForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+    else:
+        form = BookForm()
+    return render(request, 'books/book_create.html', { 'form': form } )
+
+def book_update_view(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('book_list')
+    book = get_object_or_404(models.Book, pk=pk)
+    if request.method == 'GET':
+        form = BookForm(instance=book)
+        return render(request, 'books/book_update.html', { 'form': form , 'book': book})
+    elif request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book_list')
+
+def book_delete_view(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    book = get_object_or_404(models.Book, pk=pk)
+    if request.method=='POST':
+        book.delete()
+        return redirect('book_list')
+    return render(request, 'books/book_delete.html', { 'book': book })  
+
+```
+## Make Migrations
+- ### In Windows
+```bash
+py manage.py makemigrations
+```
+- ### In MacOS
+```bash
+python manage.py makemigrations
+```
+- ### In Linux
+```bash
+python3 manage.py makemigrations
+```
+
+## Make Migrate for Project
+- ### In Windows
+```bash
+py manage.py migrate
+```
+- ### In MacOS
+```bash
+python manage.py migrate
+```
+- ### In Linux
+```bash
+python3 manage.py migrate
 ```
 
 ## Run Your App

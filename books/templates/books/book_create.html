@@ -13,12 +13,13 @@
             <div class="card shadow my-3">
                 <h5 class="card-header bg-success text-light px-5">فرم</h5>
                 <div class="px-5 pt-3 pb-5">
-                    <form method="POST" action="{% url 'book_create' %}">
+                    <form method="POST" action="{% url 'book_create' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form|crispy }}
                         <input class="btn btn-outline-success mt-3" type="submit" value="ایجاد کتاب">
                     </form>
                 </div>
+                
             </div>
         </div>
         <div class="col-3">

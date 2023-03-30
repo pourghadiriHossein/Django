@@ -7,12 +7,14 @@
 {% block content %}
 <div class="container mt-4">
     <div class="row flex-row-reverse justify-content-md-start">
-        {% for book in books %}
+        {% for book in page_obj %}
             <div class="card m-2" style="max-width: 45%">
                 <div class="row g-0 h-100" dir="rtl">
                     <div class="col-md-4">
-                        <img src="https://newcdn.fidibo.com/images/books/69249_94233_normal.jpg"
+                        {% if book.cover %}
+                        <img src="{{ book.cover.url }}"
                             class="img-fluid rounded-start" alt="...">
+                        {% endif %}
                     </div>
                     <div class="col-md-8 h-100">
                         <div class="d-flex flex-column justify-content-between h-100">
@@ -34,7 +36,17 @@
         {% endfor %}
     </div>
 </div>
-
+<nav aria-label="Page navigation example">
+    <ul class="pagination mt-3 justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="{% url 'book_list'%}?page={{page_obj.previous_page_number}}">Previous</a></li>
+        {% endif %}
+      <li class="page-item"><a class="page-link" href="">{{ page_obj.number }}</a></li>
+      {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="{% url 'book_list'%}?page={{page_obj.next_page_number}}">Next</a></li>
+      {% endif %}
+    </ul>
+</nav>
 <footer class="bg-light text-center text-lg-start mt-5">
   <div class="text-center bg-grey">
       <p>powered by : Poulstar</p>
