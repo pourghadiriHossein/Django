@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from . import models
 from .forms import BookForm, CommentForm
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 def book_list_view(request):
     books = models.Book.objects.all()
@@ -33,6 +34,7 @@ def book_detail_view(request, pk):
     }
     return render(request, 'books/book_detail.html', context)
 
+@login_required
 def book_create_view(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -45,6 +47,7 @@ def book_create_view(request):
         form = BookForm()
     return render(request, 'books/book_create.html', { 'form': form } )
 
+@login_required
 def book_update_view(request, pk):
     if not request.user.is_authenticated:
         return redirect('book_list')
@@ -58,6 +61,7 @@ def book_update_view(request, pk):
             form.save()
             return redirect('book_list')
 
+@login_required
 def book_delete_view(request, pk):
     if not request.user.is_authenticated:
         return redirect('login')
