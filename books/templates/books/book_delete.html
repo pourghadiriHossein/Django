@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% block page_title %}
+حذف کتاب {{ book.title }}
+{% endblock page_title %}
+
+{% block content %}
+<form method="POST" action="{% url 'book_delete' book.id %}">
+    {% csrf_token %}
+    <h1>
+        حذف کتاب {{ book.title }}
+    </h1>
+    <p>
+        آیا از حذف کتاب {{ book.title }} مطمئن هستید؟
+    </p>
+    <input class="btn btn-outline-danger mt-3" type="submit" value="بله حذف شود.">
+    <a class="btn btn-outline-secondary mt-3" href="{% url 'book_detail' book.id %}">خیر. به صفحه قبل برگرد.</a>
+</form>
+{% endblock content %}
