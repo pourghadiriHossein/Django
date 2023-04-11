@@ -1,0 +1,369 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+img {
+    cursor: pointer;
+}
+.singleProduct {
+    background-color: rgb(232, 232, 232);
+    text-align: right;
+    height: auto;
+    width: 100%;
+}
+.singleProduct > div {
+    vertical-align: top;
+}
+div.verticalPart {
+    width: 46%;
+    margin: 1% 1%;
+    display: inline-block;
+}
+div.productRoute {
+    display: block;
+    margin: 5% 10% 1% 0;
+}
+div.productRoute > ul {
+    display: block;
+}
+div.productRoute > ul > li {
+    display:  inline;
+    color: #1f9e67;
+    padding: 1%;
+}
+div.productDescription {
+    display: block;
+    margin: 10% 20% 1% 0;
+}
+div.productDescription > h1 {
+    display: block;
+    margin: 1% 0;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+div.productDescription > h2 {
+    display: block;
+    margin: 2% 2% 2% 0;
+    font-size: large;
+    font-weight: normal;
+}
+div.productDescription > del {
+    display: inline-block;
+    margin: 2% 2% 2% 0;
+    font-size: large;
+    font-weight: bold;
+}
+div.productDescription > ins {
+    display: inline-block;
+    margin: 2% 2% 2% 0;
+    font-size: large;
+    font-weight: bold;
+}
+div.productCounter {
+    display: block;
+    margin: 10% 20% 1% 0;
+}
+div.productCounter > form > input[type="button"] {
+    background-color: transparent;
+    padding: 1% 2.5%;
+    font-size: large;
+    border: 1px solid rgba(100, 99, 99, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+}
+div.productCounter > form > input[type="number"] {
+    background-color: transparent;
+    appearance: none;
+    width: 10%;
+    padding: 3% 0;
+    font-size: medium;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: center;
+}
+div.productCounter > form > input[type="submit"] {
+    background-color: #0f4857;
+    color: white;
+    padding: 1.5% 2%;
+    font-size: medium;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: center;
+}
+div.productCounter > form > input[type="button"]:hover {
+    color: #1f9e67;
+    border: 1px solid #1f9e67;
+    transition: all 0.3s;
+}
+div.productCounter > form > input[type="submit"]:hover {
+    background-color: #1f9e67;
+    transition: all 0.3s;
+}
+div.productDetail {
+    display: block;
+    margin: 10% 20% 1% 0;
+}
+div.productCategory {
+    display: block;
+}
+div.productCategory > span {
+    display: inline-block;
+    font-weight: bold;
+}
+div.productCategory > p {
+    display: inline-block;
+    color: #1f9e67;
+    margin: 0 1%;
+}
+div.productTag {
+    display: block;
+}
+div.productTag > span {
+    display: inline-block;
+    font-weight: bold;
+}
+div.productTag > p {
+    display: inline-block;
+    color: #1f9e67;
+}
+div.productImage {
+    width: 100%;
+    padding: 5% 3%;
+}
+div.productImage > img {
+    width: 100%;
+    padding: 3% 3%; 
+    border-radius: 50px;
+    box-shadow: 3px 3px 9px #0f4857;
+}
+div.allImage {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+div.allImage > img {
+    display: inline-block;
+    width: 10%;
+    border-radius: 5px;
+    margin: 0 0.1%;
+}
+div.allImage > img:hover {
+    box-shadow: 3px 3px 9px #1f9e67;
+    transition: all 0.3s;
+}
+div.horizontalPart {
+    width: 85%;
+    margin: 1% 10%;
+    text-align: center;
+}
+div.tab {
+    width: 100%;
+    text-align: right;
+}
+div.tab > button {
+    background-color: white;
+    padding: 1%;
+    font-size: large;
+    font-weight: bold;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+div.tab > button:hover {
+    color: #1f9e67;
+}
+div#description {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 3% 0;
+    background-color: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+div#description > p {
+    margin-right: 10%;
+}
+div#description > p:first-child {
+    font-size: x-large;
+    font-weight: bold;
+}
+div#description > p:last-child {
+    font-size: normal;
+    font-weight: normal;
+    padding: 2% 3% 2% 0;
+}
+div#comment {
+    display: none;
+    width: 100%;
+    text-align: right;
+    padding: 3% 0;
+    background-color: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+div#comment > hr {
+    border-top: 1px solid #0f4857;
+    margin: 5% 10%;
+}
+div#comment > div {
+    margin-right: 10%;
+}
+div.user {
+    font-size: x-large;
+    font-weight: bold;
+}
+div.userComment {
+    font-size: normal;
+    font-weight: normal;
+    margin: 1% 0;
+    padding: 2% 3% 2% 0;
+    width: 80%;
+    border-radius: 5px;
+    background-color: rgb(232, 232, 232);
+}
+div.newComment {
+    width: 100%;
+}
+
+div.newComment > form > textarea {
+    display: inline-block;
+    width: 68%;
+    padding: 2%;
+    border-radius: 5px;
+    font-size: large;
+    background-color: rgb(232, 232, 232);
+    resize: vertical;
+}
+div.newComment > form > input[type="submit"] {
+    display: inline-block;
+    padding: 2.8% 3%;
+    border-radius: 5px;
+    background-color: #0f4857;
+    color: white;
+    position: absolute;
+    font-weight: bold;
+}
+div.newComment > form > input[type="submit"]:hover {
+    background-color: #1f9e67;
+}
+.partition > h1 {
+    text-align: right;
+    margin: 3% 10% 2% 2%;
+    display: inline-block;
+}
+
+.partition > hr {
+    border-top: 1px solid #0f4857;
+    width: 50%;
+    display: inline-block;
+}
+
+.relatedProduct {
+    width: 100%;
+    text-align: center;
+}
+
+.relatedProduct > .imageBox {
+    vertical-align: top;
+    display: inline-block;
+    width: 20%;
+    margin: 3px 5px;
+}
+.imageBox > a >img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 3px 3px 9px rgba(15, 72, 87, 0.5);
+}
+
+.imageBox > a > img:hover {
+    box-shadow: 3px 3px 9px rgba(31, 158, 103, 0.9);
+    transition: all 1s ease;
+}
+.secondImageBox {
+    position: relative;
+}
+.secondImageBox > a > img {
+    opacity: 0;
+    position: absolute;
+    transform: translate(50%, -102%);
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 3px 3px 9px rgba(31, 158, 103, 0.3);
+    transition: all 1s;
+}
+
+.secondImageBox > a > div {
+    z-index: -1;
+    opacity: 0;
+    color: white;
+    font-size: 28px;
+    padding: 5px 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: absolute;
+    transform: translate(0%, -110%);
+    width: 100%;
+    height: auto;
+    background-color: #0f4857;
+}
+.imageBox > a >img:hover{
+    opacity: 0;
+}
+.imageBox:hover > .secondImageBox > a > img{
+    opacity: 1;
+    z-index: 0;
+}
+.imageBox:hover > .secondImageBox > a > div{
+    opacity: 1;
+    z-index: 0;
+}
+.imageBox > .productName {
+    display: block;
+    margin: 10px 0;
+    text-align: right;
+}
+.productName > a > p {
+    display: inline-block;
+    font-weight: bold;
+}
+.productName > a > p:hover {
+    color: #1f9e67;
+}
+.productName > a > img {
+    display: inline;
+    float: left;
+    width: 35px;
+    height: 35px;
+}
+.imageBox > .tag {
+    text-align: right;
+    display: block;
+}
+.imageBox > .tag > span {
+    color: #1f9e67;
+    margin-left: 1%;
+}
+.imageBox > .price {
+    display: block;
+    text-align: right;
+}
+.imageBox > .price > del {
+    display: inline-block;
+    font-size: larger;
+}
+.imageBox > .price > ins {
+    display: inline-block;
+    font-size: larger;
+}
