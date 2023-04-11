@@ -1,0 +1,116 @@
+{% extends 'publicLayout.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'CSS/Cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mainBox finalCart">
+    <h1>سبد خرید</h1>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>تصویر محصول</th>
+                <th>نام محصول</th>
+                <th>قیمت</th>
+                <th>تعداد</th>
+                <th>قیمت کل</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img class="removeImage" src="{% static 'IMAGE/logo/removeIcon.png' %}" alt="removeIcon">
+                </td>
+                <td>
+                    <img class="productImage" src="{% static 'IMAGE/product/dress1-1-700x893.jpg' %}" alt="dress1">
+                </td>
+                <td>لباس مجلسی</td>
+                <td>600000 ريال</td>
+                <td>
+                    <input type="button" value="+">
+                    <input type="text" value="1">
+                    <input type="button" value="-">
+                </td>
+                <td>600000 ريال</td>
+            </tr>
+            <tr>
+                <td>
+                    <img class="removeImage" src="{% static 'IMAGE/logo/removeIcon.png' %}" alt="removeIcon">
+                </td>
+                <td>
+                    <img class="productImage" src="{% static 'IMAGE/product/hoodie1-1-700x893.jpg' %}" alt="hoodie1">
+                </td>
+                <td>هودی</td>
+                <td>600000 ريال</td>
+                <td>
+                    <input type="button" value="+">
+                    <input type="text" value="2">
+                    <input type="button" value="-">
+                </td>
+                <td>1200000 ريال</td>
+            </tr>
+            <tr>
+                <td>
+                    <img class="removeImage" src="{% static 'IMAGE/logo/removeIcon.png' %}" alt="removeIcon">
+                </td>
+                <td>
+                    <img class="productImage" src="{% static 'IMAGE/product/jeans1-1-700x893.jpg' %}" alt="jeans1">
+                </td>
+                <td>شلوار لی</td>
+                <td>400000 ريال</td>
+                <td>
+                    <input type="button" value="+">
+                    <input type="text" value="3">
+                    <input type="button" value="-">
+                </td>
+                <td>1200000 ريال</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="underTable">
+        <div class="rightPart">
+            <a href="{% url 'checkout' %}"><button>تایید نهایی</button></a>
+        </div>
+        <div class="leftPart">
+            <input type="text" name="giftCode" placeholder="کد تخفیف خود را وارد کنید">
+            <a href=""><button>ثبت کد تخفیف</button></a>
+        </div>
+    </div>
+    <div class="factor">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">جمع بندی سبد خرید</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>جمع کل سبد خرید</td>
+                    <td>3000000 ﷼</td>
+                </tr>
+                <tr>
+                    <td>هزینه ارسال</td>
+                    <td>رایگان</td>
+                </tr>
+                <tr>
+                    <td>کد تخفیف</td>
+                    <td>ندارد</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>جمع کل </th>
+                    <th>3000000 ﷼</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+

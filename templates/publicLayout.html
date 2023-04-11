@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="developed for Poulstar HTML, CSS, JS, education">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Poulstar">
+    <title>فروشگاه پل استار</title>
+    <link rel="shortcut icon" href="{% static 'IMAGE/logo/TopBarLogo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'CSS/Main.css' %}">
+    
+    {% block css %}{% endblock %}
+    
+</head>
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">&uArr;</button>
+    <div class="mainBox topHeader">
+        {% if not user.is_authenticated  %}
+        <a class="link" href="{% url 'login' %}"><button class="inlineLogin {% if urlName == 'login' %} active {%endif%}">ورود</button></a>
+        <a class="link" href="{% url 'sign_up' %}"><button class="inlineLogin {% if urlName == 'sign_up' %} active {%endif%}">ثبت نام</button></a>
+        {% else %}
+        <a class="link" href="{% url 'dashboard' %}"><button class="inlineLogin {% if urlName == 'dashboard' %} active {%endif%}">داشبورد</button></a>
+        <a class="link" href="{% url 'logout' %}"><button class="inlineLogin {% if urlName == 'logout' %} active {%endif%}">خروج</button></a>
+        {% endif %}
+        <p id="customizeDate" class="inlineDate"></p>
+    </div>
+    <div class="mainBox topBarLogo">
+        <img src="{% static 'IMAGE/logo/TopBarLogo.png' %}" alt="TopBarLogo">
+    </div>
+    <div class="mainBox menu">
+        <ul>
+            <a class="linkMenu" href="{% url 'home' %}"><li class=" {% if urlName == 'home' %} active {%endif%}">خانه</li></a>
+            {% for category in categories %}
+            <li class="dropdown">
+                <button class="dropbtn {% if urlName == 'product' %} active {%endif%}"><a href="{% url 'product' category.id %}">{{ category.label }}</a></button>
+                <div class="dropdown-content">
+                    {% for sub in category.categories.all %}
+                    <a class="linkMenu" href="{% url 'product' sub.id %}"> {{ sub.label }}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            {% endfor %}
+            <a class="linkMenu" href="{% url 'contact' %}"><li class="{% if urlName == 'contact' %} active {%endif%}">تماس با ما</li></a>
+            <a class="linkMenu" href="{% url 'faq' %}"><li class="{% if urlName == 'faq' %} active {%endif%}">سوالات متداول</li></a>
+            <a class="linkMenu" href="{% url 'tac' %}"><li class="{% if urlName == 'tac' %} active {%endif%}">قوانین و مقررات</li></a>
+            <li class="ShopingCartLogo dropdown">
+                <span class="ShopingCartCounter center dropbtn">3</span>
+                <div class="dropdown-content">
+                    <a class="btn" href="{% url 'cart' %}">فاکتور کن</a>
+                    <a class="linkMenu" href="{% url 'singleProduct' 1 %}">
+                        <img class="cart" src="{% static 'IMAGE/product/dress1-1-700x893.jpg' %}" alt="dress1-1">
+                        <div class="box">
+                            <div class="detail">
+                                <span>لباس مجلسی</span>
+                                <del>700000 ريال</del>
+                                <ins> 600000 ريال</ins>
+                                <span>تعداد: 1</span>
+                                <ins> 600000 ريال</ins>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="linkMenu" href="{% url 'singleProduct' 2 %}">
+                        <img class="cart" src="{% static 'IMAGE/product/hoodie1-1-700x893.jpg' %}" alt="hoodie1-1">
+                        <div class="box">
+                            <div class="detail">
+                                <span>هودی</span>
+                                <del>700000 ريال</del>
+                                <ins> 600000 ريال</ins>
+                                <span>تعداد: 2</span>
+                                <ins> 1200000 ريال</ins>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="linkMenu" href="{% url 'singleProduct' 3 %}">
+                        <img class="cart" src="{% static 'IMAGE/product/jeans1-1-700x893.jpg' %}" alt="jeans1-1">
+                        <div class="box">
+                            <div class="detail">
+                                <span>شلوار لی</span>
+                                <del>500000 ريال</del>
+                                <ins> 400000 ريال</ins>
+                                <span>تعداد: 3</span>
+                                <ins> 1200000 ريال</ins>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>            
+        </ul>
+    </div>
+    <div class="whiteSpace"></div>
+    {% block content %}{% endblock %}
+    <div class="whiteSpace"></div>
+    <div class="mainBox footer">
+        <div class="box">
+            <label class="footerFont" for="contact">تماس با ما</label>
+            <p>شماره تماس: 34911-013</p>
+            <p>آدرس: گیلان - رشت - گلسار - چهار راه اصفهان</p>
+            <p>پست الکترونیک: info@poulstar.com</p>
+        </div>
+        <div class="box">
+            <label class="footerFont" for="about">درباره ما</label>
+            <p>
+                سایت آموزشی فروشگاه آنلاین صرفا جهت آموزش بوده و استفاده از آن بلا مانع است.
+            </p>
+        </div>
+        <div class="box">
+            <label class="footerFont" for="tag">تگ</label>
+            {% for tag in tags %}
+            <button class="footerBTN"><a href="{% url 'tag' tag.id %}">{{ tag.label }}</a></button>
+            {% endfor %}
+        </div>
+        <div class="box">
+            <label class="footerFont" for="payment">پرداخت</label>
+            <p>کلیه تراکنش های موجود در این سایت از طریق ID Pay صورت می گیرد و به صورت آزمایشی می باشد.</p>
+        </div>
+    </div>
+    <script src="{% static 'JS/Layout.js' %}"></script>
+    {% block js %}{% endblock %}
+</body>
+</html>

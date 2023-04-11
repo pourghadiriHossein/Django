@@ -1,0 +1,58 @@
+.register {
+    background-color: rgb(232, 232, 232);
+    text-align: center;
+    height: auto;
+    width: 100%;
+    vertical-align: top;
+}
+.register > h1 {
+    padding: 5px 10% 5px 1%;
+    display: inline-block;
+}
+.register > hr {
+    border-top: 1px solid #0f4857;
+    display: inline-block;
+    width: 65%;
+    margin-right: 6%;
+}
+.registerBox {
+    text-align: center;
+    margin: 2% 2%;
+    width: 55%;
+    display: inline-block;
+    vertical-align: top;
+}
+.registerBox > form > input[type="text"] {
+    display: inline-block;
+    width: 49%;
+    height: 40px;
+    margin: 0 2px 20px 2px;
+    border-radius: 5px;
+    padding-right: 20px ;
+}
+.registerBox > form > input[type="submit"] {
+    display: inline-block;
+    width: 100%;
+    height: 40px;
+    margin: 10px 2px 20px 2px;
+    border-radius: 5px;
+    background-color: #0f4857;
+    color: white;
+    font-weight: bold;    
+}
+.registerBox > form > input[type="submit"]:hover {
+    background-color: #1f9e67;
+    transition: all 0.3s;
+}
+.registerBox > form > input:focus {
+    outline: 2px solid #0f4857;
+    color: white;
+    transition: all 0.3s;
+}
+.guideBox {
+    width: 35%;
+    display: inline-block;
+}
+.guideBox > p {
+    text-align: justify;
+}

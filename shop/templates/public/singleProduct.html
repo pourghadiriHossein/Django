@@ -1,0 +1,141 @@
+{% extends 'publicLayout.html' %}
+{% load static %}
+{% load tools %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'CSS/SingleProduct.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mainBox singleProduct">
+    <div class="verticalPart">
+        <div class="productRoute">
+            <ul>
+                <li><a href="{% url 'home' %}">خانه</a></li>/
+                {% if product.category_id %}
+                    {% if product.category_id.parent_id %}
+                    <li><a href="{% url 'product' product.category_id.parent_id.id %}">{{ product.category_id.parent_id }}</a></li>/
+                    <li><a href="{% url 'product' product.category_id.id %}">{{ product.category_id }}</a></li>
+                    {% else %}
+                    <li><a href="{% url 'product' product.category_id.id %}">{{ product.category_id }}</a></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+        <div class="productDescription">
+            <h1>{{ product.label }}</h1>
+            <h2>{{ product.description }}</h2>
+            {% if product.discount_id %}
+            <del>{{ product.price|showPrice }} ريال</del>
+            <ins>{% if product.discount_id.price %}
+                {{ product.price|mines:product.discount_id.price }}
+                {% elif product.discount_id.percent %}
+                {{ product.price|calculateDiscount:product.discount_id.percent }}
+                {% endif %} ريال</ins>
+            {% else %}
+            <ins>{{ product.price|showPrice }} ريال</ins>
+            {% endif %}
+        </div>
+        <div class="productCounter">
+            <form action="">
+                <input type="button" value="+" onclick="increment()">
+                <input type="number" name="quantity" value="1" id="productQuantity">
+                <input type="button" value="-" onclick="decrement()">
+                <input type="submit" value="افزودن به سبد خرید">
+            </form>
+        </div>
+        <div class="productDetail">
+            <div class="productCategory">
+                <span>دسته بندی: </span>
+                <p><a href="{% url 'product' product.category_id.id %}">{{ product.category_id }}</a></p>
+            </div>
+            <div class="productTag">
+                <span>تگ ها: </span>
+                {% for tag in product.tag_id.all %}
+                <p><a href="{% url 'tag' tag.id %}">{{ tag.label }}</a></p>، 
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="verticalPart">
+        <div class="productImage">
+            <img id="show" src="{{ product.productImages.all.0.path.url }}" alt="dress1">
+        </div>
+        <div class="allImage">
+            <img onclick="selectFirstImage()" id="first" src="{{ product.productImages.all.0.path.url }}" alt="dress1">
+            <img onclick="selectSecondImage()" id="second" src="{{ product.productImages.all.1.path.url }}" alt="dress1">
+        </div>
+    </div>
+    <div class="horizontalPart">
+        <div class="tab">
+            <button onclick="descriptionTab()">توضیحات</button>
+            <button onclick="commentTab()">نظر ها (0)</button>
+        </div>
+        <div id="description" class="tabcontent">
+            <p>{{ product.label }}</p>
+            <p>{{ product.description }}</p>
+        </div>
+        <div id="comment" class="tabcontent">
+            {% for comment in comments %}
+            <div class="user">
+                <p>{{ comment.user_id }}</p>
+            </div>
+            <div class="userComment">
+                <p>{{ comment.description }}</p>
+            </div>
+            {% endfor %}
+            <hr>
+            {% if user.is_authenticated %}
+            <div class="newComment">
+                <form action="">
+                    <textarea name="comment" placeholder="نظر خود را بنویسید ..."></textarea>
+                    <input type="submit" value="ثبت نظر">
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="partition">
+        <h1>آخرین محصولات</h1>
+        <hr>
+    </div>
+    <div class="relatedProduct">
+        {% for product in latestProduct %}
+        <div class="imageBox">
+            {% if product.discount_id %}
+            <span class="discount"></span>
+            {% endif %}
+            <a href="{% url 'singleProduct' product.id %}"><img src="{{ product.productImages.all.0.path.url }}" alt="bag1"></a>
+            <div class="secondImageBox">
+                <a href="{% url 'singleProduct' product.id %}"><img src="{{ product.productImages.all.1.path.url }}" alt="bag1"></a>
+                <a href="{% url 'singleProduct' product.id %}"><div>جزئیات</div></a>
+            </div>
+            <div class="productName">
+                <a href="{% url 'singleProduct' product.id %}"><p>کیف کروئلا</p></a>
+                <a href="{% url 'singleProduct' product.id %}"><img src="{% static 'IMAGE/menu/ShopingCartLogo.png' %}" alt="ShopingCartLogo"></a>
+            </div>
+            <div class="tag">
+                {% for tag in product.tag_id.all %}
+                <span><a href="{% url 'tag' tag.id %}">{{ tag.label }}</a></span>,
+                {% endfor %}
+            </div>
+            <div class="price">
+                {% if product.discount_id %}
+                <del>{{ product.price|showPrice }} ريال</del>
+                <ins>{% if product.discount_id.price %}
+                    {{ product.price|mines:product.discount_id.price }}
+                    {% elif product.discount_id.percent %}
+                    {{ product.price|calculateDiscount:product.discount_id.percent }}
+                    {% endif %} ريال</ins>
+                {% else %}
+                <ins>{{ product.price|showPrice }} ريال</ins>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'JS/SingleProduct.js' %}"></script>
+{% endblock %}

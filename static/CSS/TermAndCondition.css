@@ -1,0 +1,23 @@
+.termAndCondition {
+    text-align: justify;
+    background-color: rgb(232, 232, 232);
+}
+div.termAndCondition > h1 {
+    padding: 3% 0;
+}
+div.termAndCondition > h2 {
+    padding: 3% 0;
+    margin-right: 5%;
+    display: inline-block;
+}
+div.termAndCondition > div {
+    display: block;
+    padding: 0% 10% 5% 10%;
+}
+div.termAndCondition > hr {
+    display: inline-block;
+    border-top: 1px solid #0f4857;
+    width: 75%;
+    margin-right: 4%;
+    border-radius: 10%;
+}
