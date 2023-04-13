@@ -1,0 +1,291 @@
+.customizeLayout {
+    background-color: rgb(232, 232, 232);
+    text-align: center;
+    height: auto;
+    width: 100%;
+}
+.customizeLayout > div {
+    vertical-align: top;
+}
+.horizontalPart {
+    width: 100%;
+    padding: 1% 0;
+}
+.horizontalRightPart {
+    display: inline-block;
+    width: 25%;
+    margin: 1%;
+}
+.horizontalLeftPart {
+    display: inline-block;
+    width: 65%;
+    margin: 1%;
+    text-align: right;
+}
+.horizontalRightPart > ul {
+    display: inline-block;
+    width: 100%;
+}
+.horizontalRightPart > ul > li {
+    display: inline-block;
+    padding: 0 1%;
+    color: #1f9e67;
+}
+.productAmount {
+    display: inline-block;
+    width: 30%;
+}
+.productAmount > p {
+    display: inline-block;
+    font-weight: bold;
+    font-size: medium;
+}
+.productAmount > span {
+    display: inline-block;
+    font-weight: bold;
+    font-size: medium;
+}
+.sortProduct {
+    display: inline-block;
+    width: 25%;
+}
+.searchProduct {
+    display: inline-block;
+    width: 40%;
+}
+.sortProduct > select {
+    width: 100%;
+    padding: 1% 2%;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: medium;
+}
+.sortProduct > select:focus {
+    border: 1px solid #0f4857;
+    transition: all 0.3s;
+}
+.searchProduct > input[type="search"] {
+    width: 80%;
+    padding: 1% 2%;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: medium;
+}
+.searchProduct > input[type="search"]:focus {
+    border: 1px solid #0f4857;
+    transition: all 0.3s;
+}
+.searchProduct > button {
+    width: 10%;
+    padding: 1% 2%;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: medium;
+    color: white;
+    background-color: #0f4857;
+}
+.searchProduct > button:hover {
+    background-color: #1f9e67;
+    transition: all 0.3s;
+}
+.contectBox {
+    display: block;
+    width: 100%;
+    margin: 2% 0;
+}
+.contectBox > div {
+    vertical-align: top;
+}
+.helpPart {
+    display: inline-block;
+    width: 25%;
+}
+.showProduct {
+    display: inline-block;
+    width: 65%;
+}
+.latestMenProduct {
+    width: 100%;
+    display: block;
+    margin: 5% 0;
+}
+.latestMenProduct > h1 {
+    font-weight: bold;
+    font-size: large;
+}
+.smallShowProduct {
+    width: 100%;
+    display: block;
+    margin: 5% 0;
+}
+.smallImage {
+    width: 20%;
+    vertical-align: top;
+    display: inline-block;
+}
+.smallImage > a > img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 3px 3px 9px #0f4857;
+}
+.smallImage > a > img:hover {
+    box-shadow: 3px 3px 9px #1f9e67;
+}
+.smallDetail {
+    width: 30%;
+    display: inline-block;
+    padding-top: 5%;
+}
+.smallDetail p, del, ins {
+    font-weight: bold;
+    font-size: small;
+}
+.latestWomenProduct {
+    width: 100%;
+    display: block;
+    margin: 5% 0;
+}
+.latestWomenProduct > h1 {
+    font-weight: bold;
+    font-size: large;
+}
+.allTags {
+    width: 100%;
+    display: block;
+    margin: 5% 0;
+}
+.allTags > h1 {
+    font-weight: bold;
+    font-size: large;
+}
+.allTags > button {
+    display: inline-block;
+    padding: 2%;
+    background-color: #0f4857;
+    color: white;
+    border-radius: 5px;
+}
+.allTags > button:hover {
+    background-color: #1f9e67;
+    transition: all 0.3s;
+}
+.helpPart > hr {
+    border-top: 1px solid #0f4857;
+}
+
+.showProduct > .imageBox {
+    vertical-align: top;
+    display: inline-block;
+    width: 30%;
+    margin: 2% 1%;
+}
+.imageBox > a > img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 3px 3px 9px rgba(15, 72, 87, 0.5);
+}
+
+.imageBox > a > img:hover {
+    box-shadow: 3px 3px 9px rgba(31, 158, 103, 0.9);
+    transition: all 1s ease;
+}
+.secondImageBox {
+    position: relative;
+}
+.secondImageBox > a > img {
+    opacity: 0;
+    position: absolute;
+    transform: translate(50%, -102%);
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 3px 3px 9px rgba(31, 158, 103, 0.3);
+    transition: all 1s;
+}
+
+.secondImageBox > a > div {
+    z-index: -1;
+    opacity: 0;
+    color: white;
+    font-size: 28px;
+    padding: 5px 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: absolute;
+    transform: translate(0%, -110%);
+    width: 100%;
+    height: auto;
+    background-color: #0f4857;
+}
+.imageBox > a > img:hover{
+    opacity: 0;
+}
+.imageBox:hover > .secondImageBox > a > img{
+    opacity: 1;
+    z-index: 0;
+}
+.imageBox:hover > .secondImageBox > a > div{
+    opacity: 1;
+    z-index: 0;
+    transition: all 0.8s;
+}
+.imageBox > .productName {
+    display: block;
+    margin: 10px 0;
+    text-align: right;
+}
+.productName > a > p {
+    display: inline-block;
+    font-weight: bold;
+}
+.productName > a > p:hover {
+    color: #1f9e67;
+}
+.productName > a > img {
+    display: inline;
+    float: left;
+    width: 35px;
+    height: 35px;
+}
+.imageBox > .tag {
+    text-align: right;
+    display: block;
+}
+.imageBox > .tag > span {
+    color: #1f9e67;
+    margin-left: 1%;
+}
+.imageBox > .price {
+    display: block;
+    text-align: right;
+}
+.imageBox > .price > del {
+    display: inline-block;
+    font-size: larger;
+}
+.imageBox > .price > ins {
+    display: inline-block;
+    font-size: larger;
+}
+.pagination {
+    display: inline-block;
+    /* width: 100%; */
+    padding: 2% 0;
+    margin-right: 20%;
+}
+  
+.pagination a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #0f4857;
+    color: white;
+    margin: 1px;
+}
+.pagination a:hover {
+    background-color: #1f9e67;
+}
+.activeBTN {
+    background-color: #1f9e67;
+}
