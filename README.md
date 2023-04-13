@@ -179,8 +179,8 @@ python3 manage.py startapp shop
     <hr>
     <div class="loginBox">
         <form action="" method="" autocomplete="on">
-            <input type="text" name="name" placeholder="نام و نام خانوادگی خود را وارد کنید">
             <input type="text" name="phone" placeholder="شماره تماس خود را وارد کنید">
+            <input type="password" name="password" placeholder="رمز عبور خود را وارد کنید">
             <input type="submit" value="ارسال کن">
         </form>
     </div>
@@ -215,7 +215,7 @@ python3 manage.py startapp shop
             <input type="text" name="name" placeholder="نام و نام خانوادگی خود را وارد کنید">
             <input type="text" name="phone" placeholder="شماره تماس خود را وارد کنید">
             <input type="text" name="email" placeholder="پست الکترونیک خود را وارد کنید">
-            <input type="text" name="password" placeholder="رمز عبور خود را وارد کنید">
+            <input type="password" name="password" placeholder="رمز عبور خود را وارد کنید">
             <input type="submit" value="ارسال کن">
         </form>
     </div>
