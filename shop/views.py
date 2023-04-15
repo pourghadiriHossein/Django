@@ -172,8 +172,4 @@ def term_and_condition(request):
     return render(request, 'public/termAndCondition.html', context)
 
 def dashboard(request):
-    current_url = resolve(request.path_info).url_name
-    context = {
-        'urlName': current_url,
-    }
-    return render(request, 'dashboard/dashboard.html', context) 
+    return render(request, 'dashboard/dashboard.html') 
