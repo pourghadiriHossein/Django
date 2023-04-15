@@ -9,9 +9,17 @@
     <h1>ورود</h1>
     <hr>
     <div class="loginBox">
-        <form action="" method="" autocomplete="on">
-            <input type="text" name="name" placeholder="نام و نام خانوادگی خود را وارد کنید">
+        {% if messages %}
+        <ul class="message-box">
+            {% for message in messages %}
+            <li class="alert alert-{{message.tags}}">{{message}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="{% url 'login' %}" method="POST" autocomplete="on">
+            {% csrf_token %}
             <input type="text" name="phone" placeholder="شماره تماس خود را وارد کنید">
+            <input type="password" name="password" placeholder="رمز عبور خود را وارد کنید">
             <input type="submit" value="ارسال کن">
         </form>
     </div>

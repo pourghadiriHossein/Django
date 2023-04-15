@@ -29,6 +29,16 @@
     margin: 0 2px 20px 2px;
     border-radius: 5px;
     padding-right: 20px ;
+    color: #0f4857;
+}
+.registerBox > form > input[type="password"] {
+    display: inline-block;
+    width: 49%;
+    height: 40px;
+    margin: 0 2px 20px 2px;
+    border-radius: 5px;
+    padding-right: 20px ;
+    color: #0f4857;
 }
 .registerBox > form > input[type="submit"] {
     display: inline-block;
@@ -46,7 +56,7 @@
 }
 .registerBox > form > input:focus {
     outline: 2px solid #0f4857;
-    color: white;
+    color: #0f4857;
     transition: all 0.3s;
 }
 .guideBox {
