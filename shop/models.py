@@ -92,13 +92,13 @@ class Comments (models.Model):
 class Orders (models.Model):
     user_id = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     address_id = models.ForeignKey(to=Addresses, on_delete=models.CASCADE)
-    discount_id = models.ForeignKey(to=Discounts, on_delete=models.CASCADE)
+    discount_id = models.ForeignKey(to=Discounts, on_delete=models.CASCADE, null=True, blank=True)
     total_price = models.DecimalField(max_digits=20, decimal_places=2)
     pay_price = models.DecimalField(max_digits=20, decimal_places=2)
     status = models.BooleanField()
 
     def __str__(self):
-        return self.user_id.name
+        return self.user_id.username
 
 class OrderListItems (models.Model):
     user_id = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
@@ -108,4 +108,4 @@ class OrderListItems (models.Model):
     status = models.BooleanField()
 
     def __str__(self):
-        return self.user_id.name
+        return self.user_id.username
