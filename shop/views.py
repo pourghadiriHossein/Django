@@ -1,6 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import resolve
 from . import models
+from django.contrib.auth.decorators import login_required
+from accounts.models import CustomUser
+from django.contrib import messages
+from .forms import Update_Profile, Update_Address
+from lib import error_progres
 
 def cart(request):
     current_url = resolve(request.path_info).url_name
@@ -171,9 +176,121 @@ def term_and_condition(request):
     }
     return render(request, 'public/termAndCondition.html', context)
 
+@login_required
 def dashboard(request):
-    current_url = resolve(request.path_info).url_name
+    user_addresses = models.Addresses.objects.filter(user_id=request.user.id)
+    regions = models.Regions.objects.all()
+    cities = models.Cities.objects.all()
+    user_comments = models.Comments.objects.filter(user_id=request.user.id)
+    user_orders = models.Orders.objects.filter(user_id=request.user.id)
     context = {
-        'urlName': current_url,
+        'addresses' : user_addresses,
+        'regions' : regions,
+        'cities' : cities,
+        'comments' : user_comments,
+        'orders' : user_orders,
     }
-    return render(request, 'dashboard/dashboard.html', context) 
+    return render(request, 'dashboard/dashboard.html',context)
+
+@login_required
+def update_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if request.method == "POST":
+        form = Update_Profile(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            phone = request.POST['phone']
+            email = request.POST['email']
+            username_state = False
+            phone_state = False
+            email_state = False
+            if not request.user.username == username:
+                if CustomUser.objects.filter(username=username).first():
+                    messages.error(request, 'نام کاربری مورد نظر قبلا ثبت شده است')
+                    username_state = True
+            if not request.user.phone == phone:
+                if CustomUser.objects.filter(phone=phone).first():
+                    messages.error(request, 'شماره تماس مورد نظر قبلا ثبت شده است')
+                    phone_state = True
+            if not request.user.email == email:    
+                if CustomUser.objects.filter(email=email).first():
+                    messages.error(request, 'پست الکترونیک مورد نظر قبلا ثبت شده است')
+                    email_state = True
+
+            if (username_state == False and phone_state == False and email_state == False):
+                CustomUser.objects.update(
+                    username = username,
+                    phone = phone,
+                    email = email,
+                )
+                messages.success(request, 'ویرایش شما با موفقیت انجام شد')
+                return redirect('dashboard')  
+        else:
+            error_messages = error_progres(form.errors)
+            for error in error_messages:
+                messages.error(request, error)        
+    return redirect('dashboard')   
+ 
+@login_required
+def update_address(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if request.method == "POST":
+        address = get_object_or_404(models.Addresses, pk=pk)
+        if not address:
+            messages.error(request, 'دسترسی غیرمجاز')
+            return redirect('logout')
+        else:
+            if not address.user_id.id == request.user.id:
+                messages.error(request, 'دسترسی غیرمجاز')
+                return redirect('logout')
+        form = Update_Address(request.POST)
+        if form.is_valid():
+            city_id = request.POST['city_id']
+            detail = request.POST['detail']
+            city = models.Cities.objects.filter(id=city_id).first()
+            if not city:
+                messages.error(request, 'شهر مورد نظر وجود ندارد')
+                return redirect('dashboard')
+
+            address.city_id = city
+            address.detail = detail
+            address.save()
+            messages.success(request, 'ویرایش شما با موفقیت انجام شد')
+            return redirect('dashboard')  
+        else:
+            error_messages = error_progres(form.errors)
+            for error in error_messages:
+                messages.error(request, error)
+    return redirect('dashboard')
+
+@login_required
+def delete_address(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    address = get_object_or_404(models.Addresses, pk=pk)
+    if not address:
+        messages.error(request, 'دسترسی غیرمجاز')
+        return redirect('logout')
+    else:
+        if not address.user_id.id == request.user.id:
+            messages.error(request, 'دسترسی غیرمجاز')
+            return redirect('logout')
+    address.delete()
+    return redirect('dashboard')
+
+@login_required
+def delete_comment(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    comment = get_object_or_404(models.Comments, pk=pk)
+    if not comment:
+        messages.error(request, 'دسترسی غیرمجاز')
+        return redirect('logout')
+    else:
+        if not comment.user_id.id == request.user.id:
+            messages.error(request, 'دسترسی غیرمجاز')
+            return redirect('logout')
+    comment.delete()
+    return redirect('dashboard')     

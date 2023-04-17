@@ -12,4 +12,8 @@ urlpatterns = [
     path('<int:pk>/single-product/', views.single_product, name='singleProduct'),
     path('term-and-condition/', views.term_and_condition, name='tac'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('dashboard/update-profile', views.update_profile, name='update_profile'),
+    path('dashboard/update-address/<int:pk>', views.update_address, name='update_address'),
+    path('dashboard/delete-address/<int:pk>', views.delete_address, name='delete_address'),
+    path('dashboard/delete-comment/<int:pk>', views.delete_comment, name='delete_comment'),
 ]

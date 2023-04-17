@@ -62,7 +62,7 @@
         <div class="top-nav-title">
             <p class="p-white">
                 {% if user.is_authenticated %}
-                {{ user }}
+                {{ user.username }}
                 {% endif %}
             </p>
         </div>
@@ -78,15 +78,15 @@
                     <table>
                         <tr>
                             <th class="first">نام کاربری</th>
-                            <th class="second">حسین پورقدیری</th>
+                            <th class="second">{{ user.username }}</th>
                         </tr>
                         <tr>
                             <th class="first">شماره تماس</th>
-                            <th class="second">09398932183</th>
+                            <th class="second">{{ user.phone }}</th>
                         </tr>
                         <tr>
                             <th class="first">پست الکترونیک</th>
-                            <th class="second">hossein.654321@yahoo.com</th>
+                            <th class="second">{{ user.email }}</th>
                         </tr>
                         <tr>
                             <th colspan="2">
@@ -98,10 +98,18 @@
                 <div class="profile-dialog-box" id="profile-dialog-box">
                     <div class="close-box" onclick="closeDialogBox('profile-dialog-box')">&#x2715;</div>
                     <div class="profile-dialog-box-content">
-                        <form action="" autocomplete="on" method="post">
-                            <input type="text" name="username" placeholder="نام کاربری خود را وارد کنید">
-                            <input type="text" name="phone" placeholder="شماره تماس خود را وارد کنید">
-                            <input type="text" name="email" placeholder="پست الکترونیک خود را وارد کنید">
+                        {% if messages %}
+                        <ul class="message-box">
+                            {% for message in messages %}
+                            <li class="alert alert-{{message.tags}}">{{message}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form action="{% url 'update_profile' %}" autocomplete="on" method="post">
+                            {% csrf_token %}
+                            <input value="{{ user }}" type="text" name="username" placeholder="نام کاربری خود را وارد کنید">
+                            <input value="{{ user.phone }}" type="text" name="phone" placeholder="شماره تماس خود را وارد کنید">
+                            <input value="{{ user.email }}" type="text" name="email" placeholder="پست الکترونیک خود را وارد کنید">
                             <input type="submit" value="ارسال کن">
                         </form>
                     </div>
@@ -122,512 +130,60 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for address in addresses %}
                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
+                            <td>{{ address.id }}</td>
+                            <td>{{ address.city_id.region_id.label }}</td>
+                            <td>{{ address.city_id }}</td>
+                            <td>{{ address.detail }}</td>
                             <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
+                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-{{ address.id }}')">ویرایش</button>
                             </td>
                             <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
+                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-{{ address.id }}')">حذف</button>
                             </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
+                            <div class="address-dialog-box-update" id="address-dialog-box-update-{{ address.id }}">
+                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-{{ address.id }}')">&#x2715;</div>
                                 <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
+                                    {% if messages %}
+                                    <ul class="message-box">
+                                        {% for message in messages %}
+                                        <li class="alert alert-{{message.tags}}">{{message}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    <form action="{% url 'update_address' address.id %}" autocomplete="on" method="post">
+                                        {% csrf_token %}
+                                        <input value="{{ address.city_id.region_id.id }}" name="region_id" list="region" placeholder="استان خود را انتخاب کنید">
                                         <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
+                                            {% for region in regions %}
+                                            <option value="{{ region.id }}">{{ region.label }}</option>
+                                            {% endfor %}
                                         </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
+                                        <input value="{{ address.city_id.id }}" name="city_id" list="city" placeholder="شهر خود را انتخاب کنید">
                                         <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
+                                            {% for city in cities %}
+                                            <option value="{{ city.id }}">{{ city.label }}</option>
+                                            {% endfor %}
                                         </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
+                                        <input value="{{ address.detail }}" type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
                                         <input type="submit" value="ارسال کن">
                                     </form>
                                 </div>
                             </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
+                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-{{ address.id }}">
+                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-{{ address.id }}')">&#x2715;</div>
                                 <div class="profile-dialog-box-content">
                                     <p>آدرس مورد نظر پاک شود؟</p>
                                     <hr>
                                     <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
                                     <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
+                                    <a href="{% url 'delete_address' address.id %}" class="a-style danger confirm">آری</a>
+                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-{{ address.id }}')">خیر</a>
                                 </div>
                             </div>
                         </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
-                         <tr>
-                            <td>1</td>
-                            <td>گیلان</td>
-                            <td>رشت</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>
-                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-1')">ویرایش</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-1')">حذف</button>
-                            </td>
-                            <div class="address-dialog-box-update" id="address-dialog-box-update-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <form action="post-for-update/1" autocomplete="on" method="post">
-                                        <input list="region" placeholder="استان خود را انتخاب کنید">
-                                        <datalist id="region">
-                                            <option value="1">گیلان</option>
-                                            <option value="2">تهران</option>
-                                            <option value="3">خراسان</option>
-                                            <option value="4">ایلام</option>
-                                        </datalist>
-                                        <input list="city" placeholder="شهر خود را انتخاب کنید">
-                                        <datalist id="city">
-                                            <option value="1">رشت</option>
-                                            <option value="2">انزلی</option>
-                                            <option value="3">رودسر</option>
-                                            <option value="4">لاهیجان</option>
-                                        </datalist>
-                                        <input type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
-                                        <input type="submit" value="ارسال کن">
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>آدرس مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-1')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -646,50 +202,34 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for comment in comments %}
                         <tr>
-                            <td>1</td>
-                            <td>لباس مجلسی</td>
-                            <td>لباس بسیار مرغوب و عالی</td>
+                            <td>{{ comment.id }}</td>
+                            <td>{{ comment.product_id.label }}</td>
+                            <td>{{ comment.description }}</td>
                             <td>
+                                {% if comment.status == 1 %}
                                 <button class="table-btn success">فعال</button>
+                                {% else %}
+                                <button class="table-btn danger">غیرفعال</button>
+                                {% endif %}
                             </td>
                             <td>
-                                <button class="table-btn danger" onclick="openDialogBox('comment-dialog-box-delete-1')">حذف</button>
+                                <button class="table-btn danger" onclick="openDialogBox('comment-dialog-box-delete-{{ comment.id }}')">حذف</button>
                             </td>
-                            <div class="comment-dialog-box-delete" id="comment-dialog-box-delete-1">
-                                <div class="close-box" onclick="closeDialogBox('comment-dialog-box-delete-1')">&#x2715;</div>
+                            <div class="comment-dialog-box-delete" id="comment-dialog-box-delete-{{ comment.id }}">
+                                <div class="close-box" onclick="closeDialogBox('comment-dialog-box-delete-{{ comment.id }}')">&#x2715;</div>
                                 <div class="profile-dialog-box-content">
                                     <p>نظر مورد نظر پاک شود؟</p>
                                     <hr>
                                     <p>هشدار! در صورت پاک شدن نظر مورد نظر؛ امکان بازگشت وجود ندارد.</p>
                                     <hr>
-                                    <a href="delete/1" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('comment-dialog-box-delete-1')">خیر</a>
+                                    <a href="{% url 'delete_comment' comment.id %}" class="a-style danger confirm">آری</a>
+                                    <a class="a-style success confirm" onclick="closeDialogBox('comment-dialog-box-delete-{{ comment.id }}')">خیر</a>
                                 </div>
                             </div>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>لباس مجلسی</td>
-                            <td>لباس بسیار مرغوب و عالی</td>
-                            <td>
-                                <button class="table-btn danger">غیر فعال</button>
-                            </td>
-                            <td>
-                                <button class="table-btn danger" onclick="openDialogBox('comment-dialog-box-delete-2')">حذف</button>
-                            </td>
-                            <div class="comment-dialog-box-delete" id="comment-dialog-box-delete-2">
-                                <div class="close-box" onclick="closeDialogBox('comment-dialog-box-delete-2')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <p>ظر مورد نظر پاک شود؟</p>
-                                    <hr>
-                                    <p>هشدار! در صورت پاک شدن نظر مورد نظر؛ امکان بازگشت وجود ندارد.</p>
-                                    <hr>
-                                    <a href="delete/2" class="a-style danger confirm">آری</a>
-                                    <a class="a-style success confirm" onclick="closeDialogBox('comment-dialog-box-delete-2')">خیر</a>
-                                </div>
-                            </div>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -711,108 +251,42 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for order in orders %}
                         <tr>
-                            <td>1</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>Gift_code</td>
-                            <td>500000 ريال</td>
-                            <td>400000 ريال</td>
+                            <td>{{ order.id }}</td>
                             <td>
-                                <button class="table-btn info" onclick="openDialogBox('order-dialog-box-detail-1')">محصولات</button>
+                                {{ order.address_id.city_id.region_id.label }} - 
+                                {{ order.address_id.city_id.label }} - 
+                                {{ order.address_id.detail }}
                             </td>
                             <td>
+                                {% if order.discount_id %}
+                                {{ order.discount_id.label }}
+                                {% else %}
+                                تخفیف ندارد
+                                {% endif %}
+                            </td>
+                            <td>{{ order.total_price }} ريال</td>
+                            <td>{{ order.pay_price }} ريال</td>
+                            <td>
+                                <button class="table-btn info" onclick="openDialogBox('order-dialog-box-detail-{{ order.id }}')">محصولات</button>
+                            </td>
+                            <td>
+                                {% if order.status == 1 %}
                                 <button class="table-btn success">فعال</button>
-                            </td>
-                            <td>
-                                <button class="table-btn success">پرداخت شده</button>
-                            </td>
-                            <div class="order-dialog-box-update" id="order-dialog-box-detail-1">
-                                <div class="close-box" onclick="closeDialogBox('order-dialog-box-detail-1')">&#x2715;</div>
-                                <div class="profile-dialog-box-content">
-                                    <div class="product-title">
-                                        <span class="product-title-item" style="width: 10%;">شناسه</span>
-                                        <span class="product-title-item" style="width: 20%;">نام محصول</span>
-                                        <span class="product-title-item" style="width: 20%;">مبلغ اصلی</span>
-                                        <span class="product-title-item" style="width: 20%;">مبلغ با تخفیف</span>
-                                        <span class="product-title-item" style="width: 10%;">تعداد</span>
-                                        <span class="product-title-item" style="width: 20%;">مبلغ پرداخت شده</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">1</span>
-                                        <span class="product-body-item" style="width: 20%;">کیف</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">400000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">1</span>
-                                        <span class="product-body-item" style="width: 20%;">400000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>  
-                                </div>
-                            </div>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>گلسار- چهار راه دیلمان اصفهان</td>
-                            <td>Gift_code</td>
-                            <td>500000 ريال</td>
-                            <td>400000 ريال</td>
-                            <td>
-                                <button class="table-btn info" onclick="openDialogBox('order-dialog-box-detail-2')">محصولات</button>
-                            </td>
-                            <td>
+                                {% else %}
                                 <button class="table-btn danger">غیر فعال</button>
+                                {% endif %}
                             </td>
                             <td>
-                                <button class="table-btn danger"><a href="peyment/2" class="a-style">پرداخت</a></button>
+                                {% if order.status == 1 %}
+                                <button class="table-btn success">پرداخت شده</button>
+                                {% else %}
+                                <button class="table-btn warning"><a href="" style="text-decoration: none; color: inherit;">پرداخت</a></button>
+                                {% endif %}
                             </td>
-                            <div class="order-dialog-box-update" id="order-dialog-box-detail-2">
-                                <div class="close-box" onclick="closeDialogBox('order-dialog-box-detail-2')">&#x2715;</div>
+                            <div class="order-dialog-box-update" id="order-dialog-box-detail-{{ order.id }}">
+                                <div class="close-box" onclick="closeDialogBox('order-dialog-box-detail-{{ order.id }}')">&#x2715;</div>
                                 <div class="profile-dialog-box-content">
                                     <div class="product-title">
                                         <span class="product-title-item" style="width: 10%;">شناسه</span>
@@ -822,65 +296,20 @@
                                         <span class="product-title-item" style="width: 10%;">تعداد</span>
                                         <span class="product-title-item" style="width: 20%;">مبلغ پرداخت شده</span>
                                     </div>
+                                    {% for orderItem in order.order_list_item.all %}
                                     <div class="product-items">
+                                        <span class="product-body-item" style="width: 10%;">{{ orderItem.id }}</span>
+                                        <span class="product-body-item" style="width: 20%;">{{ orderItem.product_id.label }}</span>
+                                        <span class="product-body-item" style="width: 20%;">{{ orderItem.total_price }} ريال</span>
+                                        <span class="product-body-item" style="width: 20%;">{{ orderItem.pay_price }} ريال</span>
                                         <span class="product-body-item" style="width: 10%;">1</span>
-                                        <span class="product-body-item" style="width: 20%;">کیف</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">400000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">1</span>
-                                        <span class="product-body-item" style="width: 20%;">400000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>
-                                    <div class="product-items">
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">لباس</span>
-                                        <span class="product-body-item" style="width: 20%;">600000 ريال</span>
-                                        <span class="product-body-item" style="width: 20%;">500000 ريال</span>
-                                        <span class="product-body-item" style="width: 10%;">2</span>
-                                        <span class="product-body-item" style="width: 20%;">1000000 ريال</span>
-                                    </div>  
+                                        <span class="product-body-item" style="width: 20%;">{{ orderItem.pay_price }} ريال</span>
+                                    </div> 
+                                    {% endfor %} 
                                 </div>
                             </div>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
