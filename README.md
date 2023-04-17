@@ -1779,7 +1779,7 @@ def calculateDiscount(value, arg):
                 <a href="{% url 'singleProduct' product.id %}"><div>جزئیات</div></a>
             </div>
             <div class="productName">
-                <a href="{% url 'singleProduct' product.id %}"><p>کیف کروئلا</p></a>
+                <a href="{% url 'singleProduct' product.id %}"><p>{{ product.label }}</p></a>
                 <a href="{% url 'singleProduct' product.id %}"><img src="{% static 'IMAGE/menu/ShopingCartLogo.png' %}" alt="ShopingCartLogo"></a>
             </div>
             <div class="tag">
@@ -1818,7 +1818,7 @@ def calculateDiscount(value, arg):
                 <a href="{% url 'singleProduct' product.id %}"><div>جزئیات</div></a>
             </div>
             <div class="productName">
-                <a href="{% url 'singleProduct' product.id %}"><p>کیف کروئلا</p></a>
+                <a href="{% url 'singleProduct' product.id %}"><p>{{ product.label }}</p></a>
                 <a href="{% url 'singleProduct' product.id %}"><img src="{% static 'IMAGE/menu/ShopingCartLogo.png' %}" alt="ShopingCartLogo"></a>
             </div>
             <div class="tag">
@@ -1857,7 +1857,7 @@ def calculateDiscount(value, arg):
                 <a href="{% url 'singleProduct' product.id %}"><div>جزئیات</div></a>
             </div>
             <div class="productName">
-                <a href="{% url 'singleProduct' product.id %}"><p>کیف کروئلا</p></a>
+                <a href="{% url 'singleProduct' product.id %}"><p>{{ product.label }}</p></a>
                 <a href="{% url 'singleProduct' product.id %}"><img src="{% static 'IMAGE/menu/ShopingCartLogo.png' %}" alt="ShopingCartLogo"></a>
             </div>
             <div class="tag">
@@ -2011,7 +2011,7 @@ def calculateDiscount(value, arg):
                     <a href="{% url 'singleProduct' product.id %}"><div>جزئیات</div></a>
                 </div>
                 <div class="productName">
-                    <a href="{% url 'singleProduct' product.id %}"><p>کیف کروئلا</p></a>
+                    <a href="{% url 'singleProduct' product.id %}"><p>{{ product.label }}</p></a>
                     <a href="{% url 'singleProduct' product.id %}"><img src="{% static 'IMAGE/menu/ShopingCartLogo.png' %}" alt="ShopingCartLogo"></a>
                 </div>
                 <div class="tag">
@@ -2159,7 +2159,7 @@ def calculateDiscount(value, arg):
                 <a href="{% url 'singleProduct' product.id %}"><div>جزئیات</div></a>
             </div>
             <div class="productName">
-                <a href="{% url 'singleProduct' product.id %}"><p>کیف کروئلا</p></a>
+                <a href="{% url 'singleProduct' product.id %}"><p>{{ product.label }}</p></a>
                 <a href="{% url 'singleProduct' product.id %}"><img src="{% static 'IMAGE/menu/ShopingCartLogo.png' %}" alt="ShopingCartLogo"></a>
             </div>
             <div class="tag">
