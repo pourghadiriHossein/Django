@@ -1,0 +1,171 @@
+.finalCart {
+    text-align: center;
+    vertical-align: top;
+    width: 100%;
+    background-color: rgb(232, 232, 232);
+}
+.finalCart > h1 {
+    text-align: right;
+    margin-right: 10%;
+    padding: 5% 0% ;
+}
+.finalCart > table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.finalCart > table > thead {
+    background-color: white;
+    border-radius: 2px;
+}
+.finalCart > table > thead > tr > th {
+    font-size: 16px;
+    width: 15%;
+    padding: 10px 0;
+}
+.finalCart > table > tbody {
+    border-radius: 2px;
+}
+.finalCart > table > tbody > tr > td {
+    font-size: 16px;
+    width: 15%;
+    padding: 10px 0;
+    vertical-align: center;
+}
+.finalCart > table > tbody > tr {
+    border-bottom: 1px solid rgba(15, 72, 87, 0.1);
+    width: 95%;
+}
+.finalCart > table > tbody > tr:last-child {
+    border-bottom: none;
+}
+.removeImage {
+    width: 10%;
+    height: auto;
+    cursor: pointer;
+}
+.productImage {
+    width: 30%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 3px 3px 9px rgba(15, 72, 87, 0.5);
+}
+.finalCart > table > tbody > tr > td input[type="button"] {
+    background-color: transparent;
+    width: 20%;
+    padding: 1% 0;
+    font-size: large;
+    border: 1px solid rgba(100, 99, 99, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+}
+.finalCart > table > tbody > tr > td > input[type="text"] {
+    background-color: transparent;
+    width: 20%;
+    padding: 3% 0;
+    font-size: medium;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: center;
+}
+.finalCart > table > tbody > tr > td > input[type="button"]:hover {
+    border: 1px solid #1f9e67;
+    color: #1f9e67;
+}
+div.underTable {
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+div.rightPart {
+    width: 48%;
+    margin: 3% 0 3% 1%;
+    display: inline-block;
+}
+div.rightPart > a > button {
+    background-color: #0f4857;
+    color: white;
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 1% 0;
+    border-radius: 5px;
+}
+div.rightPart > a > button:hover {
+    background-color: #1f9e67;
+    transition: all 0.3s;
+}
+div.leftPart {
+    width: 48%;
+    margin: 3% 1% 3% 0;
+    display: inline-block;
+}
+div.leftPart input[type="text"] {
+    display: inline-block;
+    width: 69%;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 1% 2% 1% 0;
+    border-radius: 5px;
+    text-align: right;
+}
+div.leftPart input[type="text"]:focus {
+    outline: 1px solid #0f4857;
+    transition: all 0.3s;
+}
+div.leftPart a > button {
+    display: inline-block;
+    background-color: #0f4857;
+    color: white;
+    width: 29%;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 1% 0;
+    border-radius: 5px;
+}
+div.leftPart a > button:hover {
+    background-color: #1f9e67;
+    transition: all 0.3s;
+}
+div.factor {
+    width: 50%;
+    text-align: center;
+    padding-bottom: 5%;
+}
+div.factor > table {
+    margin: 0 2%;
+    width: 96%;
+    text-align: center;
+    vertical-align: center;
+    border-collapse: collapse;
+}
+div.factor > table > thead > tr > th {
+    background-color: #0f4857;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 1% 0;
+    border-radius: 5px;
+}
+div.factor > table > tbody > tr > td {
+    background-color: white;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 1% 0;
+}
+div.factor > table > tbody > tr {
+    border-bottom: 1px solid rgba(15, 72, 87, 0.2);
+}
+div.factor > table > tbody > tr:last-child {
+    border-bottom: none;
+}
+div.factor > table > tfoot > tr > th {
+    background-color: #1f9e67;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 1% 0;
+    color: white;
+}

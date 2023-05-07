@@ -1,0 +1,121 @@
+{% extends 'publicLayout.html' %}
+{% load static %}
+{% load tools %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'CSS/Cart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mainBox finalCart">
+    <h1>سبد خرید</h1>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>تصویر محصول</th>
+                <th>نام محصول</th>
+                <th>قیمت</th>
+                <th>تعداد</th>
+                <th>قیمت کل</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in final_cart_lists %}
+            <tr>
+                <td>
+                    <a href="{% url 'delete_item_from_session' product.cart_product.id %}"><img class="removeImage" src="{% static 'IMAGE/logo/removeIcon.png' %}" alt="removeIcon"></a>
+                </td>
+                <td>
+                    <img class="productImage" src="{{ product.cart_product.productImages.all.0.path.url }}" alt="dress1">
+                </td>
+                <td>{{ product.cart_product.label }}</td>
+                <td>{% if product.cart_product.discount_id %}
+                    {% if product.cart_product.discount_id.price %}
+                        {{ product.cart_product.price|mines:product.cart_product.discount_id.price }}
+                        {% elif product.cart_product.discount_id.percent %}
+                        {{ product.cart_product.price|calculateDiscount:product.cart_product.discount_id.percent }}
+                        {% endif %}
+                    {% else %}
+                    {{ product.cart_product.price }}
+                    {% endif %} ريال</td>
+                <td>
+                    <a href="{% url 'plus_from_session'  product.cart_product.id %}"><input type="button" value="+"></a>
+                    <input type="text" value="{{ product.quantity }}">
+                    <a href="{% url 'mines_from_session'  product.cart_product.id %}"><input type="button" value="-"></a>
+                </td>
+                <td>
+                    {% if product.cart_product.discount_id %}
+                    {% if product.cart_product.discount_id.price %}
+                        {{ product.cart_product.price|mines:product.cart_product.discount_id.price|multiple:product.quantity }}
+                        {% elif product.cart_product.discount_id.percent %}
+                        {{ product.cart_product.price|calculateDiscount:product.cart_product.discount_id.percent|multiple:product.quantity }}
+                        {% endif %}
+                    {% else %}
+                    {{ product.cart_product.price|multiple:product.quantity }}
+                    {% endif %} ريال
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="underTable">
+        <div class="rightPart">
+            <a href="{% url 'checkout' %}"><button>تایید نهایی</button></a>
+        </div>
+        <div class="leftPart">
+            <form method="POST" action="{% url 'add_discount' %}">
+                {% csrf_token %}
+                <input type="text" name="giftCode" placeholder="کد تخفیف خود را وارد کنید">
+                <a href=""><button>ثبت کد تخفیف</button></a>
+            </form>
+        </div>
+    </div>
+    <div class="factor">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">جمع بندی سبد خرید</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>جمع کل سبد خرید</td>
+                    <td>
+                        
+                        {% if total_price > 1 %}
+                        {{ total_price }}ريال
+                        {% else %}
+                        سبد خرید خالی است
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>هزینه ارسال</td>
+                    <td>رایگان</td>
+                </tr>
+                <tr>
+                    <td>کد تخفیف</td>
+                    <td>
+                        {% if total_discount %}
+                        {{ total_discount }}ريال
+                        {% else %}
+                        ندارد   
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>جمع کل </th>
+                    <th>{{ total_price|mines:total_discount }} ﷼</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+

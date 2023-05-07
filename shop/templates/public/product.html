@@ -1,0 +1,155 @@
+{% extends 'publicLayout.html' %}
+{% load static %}
+{% load tools %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'CSS/Product.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mainBox customizeLayout">
+    <div class="horizontalPart">
+        <div class="horizontalRightPart">
+            <ul>
+                <li><a href="{% url 'home' %}">خانه</a></li>/
+                {% if current_category %}
+                    {% if current_category.parent_id %}
+                    <li><a href="{% url 'product' current_category.parent_id.id %}">{{ current_category.parent_id }}</a></li>/
+                    <li><a href="{% url 'product' current_category.id %}">{{ current_category }}</a></li>
+                    {% else %}
+                    <li><a href="{% url 'product' current_category.id %}">{{ current_category }}</a></li>
+                    {% endif %}
+                {% endif %}
+                {% if tag %}
+                    <li><a href="{% url 'tag' tag.id %}">{{ tag }}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="horizontalLeftPart">
+            <div class="productAmount">
+                <p>مجموع محصولات در حال نمایش: </p>
+                <span id="counter">17</span>
+            </div>
+            <div class="sortProduct">
+                <select name="sorting" id="sort" oninput="selectMode()">
+                    <option value="1">قدیمی ترین</option>
+                    <option value="2">جدید ترین</option>
+                    <option value="3">ارزان ترین</option>
+                    <option value="4">گران ترین</option>
+                </select>
+            </div>
+            <div class="searchProduct">
+                <input type="search" name="searchBox" id="searchBox" placeholder="محصول مورد نظر خود را وارد کنید">
+                <button id="search" onclick="searchProduct()">&#9935;</button>
+            </div>
+        </div>
+    </div>
+    <div class="contectBox">
+        <div class="helpPart">
+            <div class="latestMenProduct">
+                <h1>آخرین محصولات مردانه</h1>
+                {% for product in latestMenProduct  %}
+                <div class="smallShowProduct">
+                    <div class="smallImage">
+                        <a href="{% url 'singleProduct' product.id %}"><img src="{{ product.productImages.all.0.path.url }}" alt="hoodie1"></a>
+                    </div>
+                    <div class="smallDetail">
+                        <a href="{% url 'singleProduct' product.id %}"><p>{{ product }}</p></a>
+                        {% if product.discount_id %}
+                        <del>{{ product.price|showPrice }} ريال</del>
+                        <ins>{% if product.discount_id.price %}
+                            {{ product.price|mines:product.discount_id.price }}
+                            {% elif product.discount_id.percent %}
+                            {{ product.price|calculateDiscount:product.discount_id.percent }}
+                            {% endif %} ريال</ins>
+                        {% else %}
+                        <ins>{{ product.price|showPrice }} ريال</ins>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="latestWomenProduct">
+                <h1>آخرین محصولات زنانه</h1>
+                {% for product in latestWomenProduct  %}
+                <div class="smallShowProduct">
+                    <div class="smallImage">
+                        <a href="{% url 'singleProduct' product.id %}"><img src="{{ product.productImages.all.0.path.url }}" alt="hoodie1"></a>
+                    </div>
+                    <div class="smallDetail">
+                        <a href="{% url 'singleProduct' product.id %}"><p>{{ product }}</p></a>
+                        {% if product.discount_id %}
+                        <del>{{ product.price|showPrice }} ريال</del>
+                        <ins>{% if product.discount_id.price %}
+                            {{ product.price|mines:product.discount_id.price }}
+                            {% elif product.discount_id.percent %}
+                            {{ product.price|calculateDiscount:product.discount_id.percent }}
+                            {% endif %} ريال</ins>
+                        {% else %}
+                        <ins>{{ product.price|showPrice }} ريال</ins>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <hr>
+            <div class="allTags">
+                <h1>تگ ها</h1>
+                {% for tag in tags %}
+                <button><a href="{% url 'tag' tag.id %}">{{ tag }}</a></button>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="productBox" class="showProduct">
+            {% for product in products %}
+            <div id="{{ product.id }}" data-price="{% if product.discount_id %}
+            {% if product.discount_id.price %}
+                {{ product.price|mines:product.discount_id.price }}
+                {% elif product.discount_id.percent %}
+                {{ product.price|calculateDiscount:product.discount_id.percent }}
+                {% endif %}
+            {% else %}
+            {{ product.price|showPrice }}
+            {% endif %}" data-name="{{ product }}" class="imageBox">
+                {% if product.discount_id %}
+                <span class="discount"></span>
+                {% endif %}
+                <a href="{% url 'singleProduct' product.id %}"><img src="{{ product.productImages.all.0.path.url }}" alt="bag1"></a>
+                <div class="secondImageBox">
+                    <a href="{% url 'singleProduct' product.id %}"><img src="{{ product.productImages.all.1.path.url }}" alt="bag1"></a>
+                    <a href="{% url 'singleProduct' product.id %}"><div>جزئیات</div></a>
+                </div>
+                <div class="productName">
+                    <a href="{% url 'singleProduct' product.id %}"><p>{{ product.label }}</p></a>
+                    <a href="{% url 'add_to_session' product.id %}"><img src="{% static 'IMAGE/menu/ShopingCartLogo.png' %}" alt="ShopingCartLogo"></a>
+                </div>
+                <div class="tag">
+                    {% for tag in product.tag_id.all %}
+                    <span><a href="{% url 'tag' tag.id %}">{{ tag.label }}</a></span>,
+                    {% endfor %}
+                </div>
+                <div class="price">
+                    {% if product.discount_id %}
+                    <del>{{ product.price|showPrice }} ريال</del>
+                    <ins>{% if product.discount_id.price %}
+                        {{ product.price|mines:product.discount_id.price }}
+                        {% elif product.discount_id.percent %}
+                        {{ product.price|calculateDiscount:product.discount_id.percent }}
+                        {% endif %} ريال</ins>
+                    {% else %}
+                    <ins>{{ product.price|showPrice }} ريال</ins>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="horizontalPart">
+        <div id="pagination" class="pagination"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'JS/Product.js' %}"></script>
+{% endblock %}
