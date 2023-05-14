@@ -627,6 +627,27 @@ AZ_IRANIAN_BANK_GATEWAYS = {
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ```
+- ### Update urls.py File
+```bash
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings  
+from django.conf.urls.static import static
+from azbankgateways.urls import az_bank_gateways_urls
+from transaction.views import go_to_gateway_view, callback_gateway_view
+
+admin.autodiscover() 
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('shop.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('session/', include('session.urls')),
+    path('bankgateways/', az_bank_gateways_urls()),
+    path('go-to-getway/<int:price>/<str:phone>/<int:order>/', go_to_gateway_view, name='start_getway'),
+    path('call-back/', callback_gateway_view, name='call-back'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
 ## Create transaction App
 - ### In Windows
 ```bash
@@ -700,28 +721,6 @@ def callback_gateway_view(request):
     messages.error(request,'پرداخت با شکست مواجه شده است. اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت')
     return redirect('dashboard')
  ```
-
-- ### Update urls.py File
-```bash
-from django.contrib import admin
-from django.urls import path, include
-from django.conf import settings  
-from django.conf.urls.static import static
-from azbankgateways.urls import az_bank_gateways_urls
-from transaction.views import go_to_gateway_view, callback_gateway_view
-
-admin.autodiscover() 
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('shop.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('session/', include('session.urls')),
-    path('bankgateways/', az_bank_gateways_urls()),
-    path('go-to-getway/<int:price>/<str:phone>/<int:order>/', go_to_gateway_view, name='start_getway'),
-    path('call-back/', callback_gateway_view, name='call-back'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-```
 
 ## In Shop App
 - ### In templates Folder, In public Folder, Update checkout.html File
