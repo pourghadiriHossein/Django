@@ -1,5 +1,10 @@
 # Complete Session Part In Shop Project
 
+## <a href"https://github.com/ali-zahedi/az-iranian-bank-gateways">Install azbankgateways</a>
+```bash
+pip install az-iranian-bank-gateways
+```
+
 ## azbankgateways in site-packages
 - ### Update admin.py File
 ```bash
