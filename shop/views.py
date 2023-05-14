@@ -4,8 +4,9 @@ from . import models
 from django.contrib.auth.decorators import login_required
 from accounts.models import CustomUser
 from django.contrib import messages
-from .forms import Update_Profile, Update_Address
-from lib import error_progres, get_cart_session, get_discount_session
+from .forms import Update_Profile, Update_Address, Checkout
+from lib import error_progres, get_cart_session, get_discount_session, clear_session
+from azbankgateways.models import Bank
 
 def cart(request):
     current_url = resolve(request.path_info).url_name
@@ -25,11 +26,76 @@ def cart(request):
 
 @login_required
 def checkout(request):
+    final_cart_lists, total_price = get_cart_session(request)
+    total_discount = get_discount_session(request)
+    if request.method == 'POST':
+        form = Checkout(request.POST)
+        if form.is_valid():
+            if request.POST.get('selectedPreviousAddress'):
+                selectedPreviousAddress = request.POST.get('selectedPreviousAddress')
+                address_for_order = get_object_or_404(models.Addresses, pk=selectedPreviousAddress)
+            elif request.POST.get('selectedNewAddress'):    
+                selectedNewAddress = request.POST.get('selectedNewAddress')
+                city = get_object_or_404(models.Cities, pk=selectedNewAddress)
+                detail = request.POST.get('detail')
+                address_for_order = models.Addresses.objects.create(
+                    city_id = city,
+                    user_id = request.user,
+                    detail = detail,
+                )
+            if total_discount:
+                if total_discount > 0:
+                    cal_pay_price = total_price - total_discount
+                    discount_for_order = models.Discounts.objects.filter(price=total_discount).first()
+                    order_for_order_list = models.Orders.objects.create(
+                        user_id = request.user,
+                        address_id = address_for_order,
+                        discount_id = discount_for_order,
+                        total_price = total_price,
+                        pay_price = cal_pay_price,
+                        status = False,
+                    )
+            else:
+                order_for_order_list = models.Orders.objects.create(
+                    user_id = request.user,
+                    address_id = address_for_order,
+                    total_price = total_price,
+                    pay_price = total_price,
+                    status = False,
+                )
+            for item in final_cart_lists:
+                total_price = item['cart_product'].price * item['quantity']
+                if item['cart_product'].discount_id:
+                    if item['cart_product'].discount_id.price:
+                        cal_price = item['cart_product'].price - item['cart_product'].discount_id.price
+                        pay_price = cal_price * item['quantity']
+                    elif item['cart_product'].discount_id.percent:
+                        computed_price = item['cart_product'].price * item['cart_product'].discount_id.percent/100
+                        price = item['cart_product'].price - computed_price
+                        pay_price = price * item['quantity']
+                else:
+                    pay_price = total_price
+                models.OrderListItems.objects.create(
+                    user_id = request.user,
+                    product_id = item['cart_product'],
+                    order_id = order_for_order_list,
+                    total_price = total_price,
+                    pay_price = pay_price,
+                    status = True
+                )
+            clear_session(request,'cart')
+            if total_discount > 0:
+                clear_session(request, 'discount')
+            return redirect('start_getway', int(order_for_order_list.pay_price), request.user.phone, order_for_order_list.id)
+        else:
+            error_messages = error_progres(form.errors)
+            for error in error_messages:
+                messages.error(request, error)
     current_url = resolve(request.path_info).url_name
     tags = models.Tags.objects.all()
     categories = models.Categories.objects.filter(parent_id = None)
-    final_cart_lists, total_price = get_cart_session(request)
-    total_discount = get_discount_session(request)
+    user_address = models.Addresses.objects.filter(user_id=request.user.id)
+    cities = models.Cities.objects.all()
     context = {
         'urlName': current_url,
         'tags' : tags,
@@ -37,6 +103,8 @@ def checkout(request):
         'final_cart_lists': final_cart_lists,
         'total_price' : total_price,
         'total_discount' : total_discount,
+        'user_address' : user_address,
+        'cities' : cities,
     }
     return render(request, 'public/checkout.html', context)
 
@@ -207,12 +275,14 @@ def dashboard(request):
     cities = models.Cities.objects.all()
     user_comments = models.Comments.objects.filter(user_id=request.user.id)
     user_orders = models.Orders.objects.filter(user_id=request.user.id)
+    transactions = Bank.objects.filter(user_id=request.user.id)
     context = {
         'addresses' : user_addresses,
         'regions' : regions,
         'cities' : cities,
         'comments' : user_comments,
         'orders' : user_orders,
+        'transactions' : transactions,
     }
     return render(request, 'dashboard/dashboard.html',context)
 

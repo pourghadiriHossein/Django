@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'shop',
     'session',
+    'azbankgateways',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "accounts.CustomUser"
 LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "home"
+
+IDPAY_MERCHANT_CODE = '6a7f99eb-7c20-4412-a972-6dfb7cd253a4'
+
+AZ_IRANIAN_BANK_GATEWAYS = {
+   'GATEWAYS': {
+       'IDPAY': {
+           'MERCHANT_CODE': IDPAY_MERCHANT_CODE,
+           'METHOD': 'POST', 
+           'X_SANDBOX': 1, 
+       },
+   },
+   'IS_SAMPLE_FORM_ENABLE': True,
+   'DEFAULT': 'IDPAY',
+   'CURRENCY': 'IRR',
+   'TRACKING_CODE_QUERY_PARAM': 'tc',
+   'TRACKING_CODE_LENGTH': 16, 
+   'SETTING_VALUE_READER_CLASS': 'azbankgateways.readers.DefaultReader', 
+   'BANK_PRIORITIES': [
+   ],
+}
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

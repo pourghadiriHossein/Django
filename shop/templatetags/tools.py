@@ -17,4 +17,4 @@ def calculateDiscount(value, arg):
 @register.filter()
 def multiple(value, arg):
     final_price = value * arg
-    return int(final_price)
+    return int(final_price)   

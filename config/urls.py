@@ -16,11 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings  
-from django.conf.urls.static import static 
+from django.conf.urls.static import static
+from azbankgateways.urls import az_bank_gateways_urls
+from transaction.views import go_to_gateway_view, callback_gateway_view
+
+admin.autodiscover() 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('shop.urls')),
     path('accounts/', include('accounts.urls')),
     path('session/', include('session.urls')),
+    path('bankgateways/', az_bank_gateways_urls()),
+    path('go-to-getway/<int:price>/<str:phone>/<int:order>/', go_to_gateway_view, name='start_getway'),
+    path('call-back/', callback_gateway_view, name='call-back'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

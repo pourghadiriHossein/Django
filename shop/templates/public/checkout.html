@@ -7,22 +7,34 @@
 
 {% block content %}
 <div class="mainBox checkout">
-    <form action="" method="" autocomplete="on">
+    {% if messages %}
+        <ul class="message-box">
+            {% for message in messages %}
+            <li class="alert alert-{{message.tags}}">{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form action="{% url 'checkout' %}" method="POST" autocomplete="on">
+        {% csrf_token %}
         <div class="partition">
             <div class="previousAddress">
-                <label><input type="checkbox" value="1" name="previousAddress">&nbsp; آردس پیش فرض &nbsp;</label>
-                <label><input type="radio" value="1" name="selectedPreviousAddress"> گیلان - رشت - گلسار </label>
-                <label><input type="radio" value="1" name="selectedPreviousAddress"> گیلان - رشت - منظریه </label>
-                <label><input type="radio" value="1" name="selectedPreviousAddress"> گیلان - رشت - شهریاران </label>
+                <label><input type="checkbox" name="previousAddress">&nbsp; آردس پیش فرض &nbsp;</label>
+                
+                {% for address in user_address %}
+                <label><input type="radio" value="{{ address.id }}" name="selectedPreviousAddress"> 
+                    {{ address.city_id.region_id.label }} -  
+                    {{ address.city_id.label }} -  
+                    {{ address.detail }}
+                </label>
+                {% endfor %}
             </div>
             <div class="newAddress">
-                <label><input type="checkbox" value="1" name="newAddress">&nbsp; آردس پیش فرض &nbsp;</label>
-                <input list="region" name="newAddress" placeholder="کد شهر خود را انتخاب کنید"> 
+                <label><input type="checkbox" name="newAddress">&nbsp; آردس جدید &nbsp;</label>
+                <input list="region" name="selectedNewAddress" placeholder="کد شهر خود را انتخاب کنید"> 
                 <datalist id="region">
-                    <option value="1">گیلان - رشت - گلسار</option>
-                    <option value="2">گیلان - رشت - رازی </option>
-                    <option value="3">گیلان - رشت - گاز</option>
-                    <option value="4">گیلان - رشت - معلم</option>
+                    {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city }}</option>
+                    {% endfor %}
                 </datalist>
                 <input type="text" name="detail" placeholder="جزئیات آدرس: مثال گلسار - چهار راه اصفهان" maxlength="100">
             </div>
@@ -90,7 +102,7 @@
         </div>
         <div class="partition">
             <label>
-                <input type="checkbox" value="1" name="acceptTerm">
+                <input type="checkbox" name="acceptTerm">
                 &nbsp; <a href="{% url 'tac' %}">قوانین و مقررات</a> سایت را مطالعه کرده و با آگاهی کامل شرایط خرید آنلاین را می پذیرم. &nbsp;
             </label>
             <input type="submit" value="تایید و پرداخت">

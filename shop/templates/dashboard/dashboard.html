@@ -282,7 +282,7 @@
                                 {% if order.status == 1 %}
                                 <button class="table-btn success">پرداخت شده</button>
                                 {% else %}
-                                <button class="table-btn warning"><a href="" style="text-decoration: none; color: inherit;">پرداخت</a></button>
+                                <button class="table-btn warning"><a href="{% url 'start_getway' order.pay_price|showPrice order.user_id.phone order.id %}" style="text-decoration: none; color: inherit;">پرداخت</a></button>
                                 {% endif %}
                             </td>
                             <div class="order-dialog-box-update" id="order-dialog-box-detail-{{ order.id }}">
@@ -322,42 +322,35 @@
                         <tr>
                             <th>شناسه</th>
                             <th>شناسه فاکتور</th>
+                            <th>بانک انتخابی</th>
                             <th>مبلغ پرداخت شده</th>
                             <th>کد رهگیری</th>
                             <th>شناسه رهگیری</th>
-                            <th>شماره کارت</th>
                             <th>تاریخ پرداخت</th>
                             <th>تاریخ تایید پرداخت</th>
                             <th>وضعیت</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for transaction in transactions %}
                         <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>4500000 ريال</td>
-                            <td>vdhvkdf9473f79dhukv7</td>
-                            <td>4836346</td>
-                            <td style="direction: ltr;">5892-****-****-1604</td>
-                            <td style="direction: ltr;">1401/05/10 14:30:43</td>
-                            <td style="direction: ltr;">1401/05/10 14:30:58</td>
+                            <td>{{ transaction.pk }}</td>
+                            <td>{{ transaction.order_id.id }}</td>
+                            <td>{{ transaction.bank_type }}</td>
+                            <td>{{ transaction.amount }} ريال</td>
+                            <td>{{ transaction.tracking_code }}</td>
+                            <td>{{ transaction.reference_number }}</td>
+                            <td style="direction: ltr;">{{ transaction.created_at }}</td>
+                            <td style="direction: ltr;">{{ transaction.update_at }}</td>
                             <td>
+                                {% if transaction.status == 'Complete' %}
                                 <button class="table-btn success">موفق</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>4</td>
-                            <td>4500000 ريال</td>
-                            <td>vdhvkdf9473f79dhukv7</td>
-                            <td>4836346</td>
-                            <td style="direction: ltr;">5892-****-****-1604</td>
-                            <td style="direction: ltr;">1401/05/10 14:30:43</td>
-                            <td style="direction: ltr;">1401/05/10 14:30:58</td>
-                            <td>
+                                {% else %}
                                 <button class="table-btn danger">ناموفق</button>
+                                {% endif %}
                             </td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

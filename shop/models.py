@@ -98,7 +98,7 @@ class Orders (models.Model):
     status = models.BooleanField()
 
     def __str__(self):
-        return self.user_id.username
+        return f"{self.id}"
 
 class OrderListItems (models.Model):
     user_id = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
