@@ -3,15 +3,15 @@
 ## Create app session
 ### In Windows
 ```bash
-py manage.py session car
+py manage.py startapp session
 ```
 ### In MacOS
 ```bash
-python manage.py session car
+python manage.py startapp session
 ```
 ### In Linux
 ```bash
-python3 manage.py session car
+python3 manage.py startapp session
 ```
 
 ## In Session App
