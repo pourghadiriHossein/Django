@@ -1,0 +1,116 @@
+{% extends 'publicLayout.html' %}
+{% load static %}
+{% block css %}
+{% load tools %}
+<link rel="stylesheet" href="{% static 'CSS/Checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="mainBox checkout">
+    {% if messages %}
+        <ul class="message-box">
+            {% for message in messages %}
+            <li class="alert alert-{{message.tags}}">{{message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form action="{% url 'checkout' %}" method="POST" autocomplete="on">
+        {% csrf_token %}
+        <div class="partition">
+            <div class="previousAddress">
+                <label><input type="checkbox" name="previousAddress">&nbsp; آردس پیش فرض &nbsp;</label>
+                
+                {% for address in user_address %}
+                <label><input type="radio" value="{{ address.id }}" name="selectedPreviousAddress"> 
+                    {{ address.city_id.region_id.label }} -  
+                    {{ address.city_id.label }} -  
+                    {{ address.detail }}
+                </label>
+                {% endfor %}
+            </div>
+            <div class="newAddress">
+                <label><input type="checkbox" name="newAddress">&nbsp; آردس جدید &nbsp;</label>
+                <input list="region" name="selectedNewAddress" placeholder="کد شهر خود را انتخاب کنید"> 
+                <datalist id="region">
+                    {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city }}</option>
+                    {% endfor %}
+                </datalist>
+                <input type="text" name="detail" placeholder="جزئیات آدرس: مثال گلسار - چهار راه اصفهان" maxlength="100">
+            </div>
+        </div>
+        <div class="partition">
+            <div class="factor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">جمع بندی سبد خرید</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>جمع کل سبد خرید</td>
+                            <td>
+                                {% if total_price > 1 %}
+                                {{ total_price }}ريال
+                                {% else %}
+                                سبد خرید خالی است
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>هزینه ارسال</td>
+                            <td>رایگان</td>
+                        </tr>
+                        <tr>
+                            <td>کد تخفیف</td>
+                            <td>
+                                {% if total_discount %}
+                                {{ total_discount }}ريال
+                                {% else %}
+                                ندارد   
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>جمع کل </th>
+                            <th>{{ total_price|mines:total_discount }} ﷼</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="personalData">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">مشخصات فردی</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2">مجموعه پل استار</td>
+                            <td>013-34911</td>
+                        </tr>
+                        <tr>
+                            <td>info@poulstar.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="partition">
+            <label>
+                <input type="checkbox" name="acceptTerm">
+                &nbsp; <a href="{% url 'tac' %}">قوانین و مقررات</a> سایت را مطالعه کرده و با آگاهی کامل شرایط خرید آنلاین را می پذیرم. &nbsp;
+            </label>
+            <input type="submit" value="تایید و پرداخت">
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

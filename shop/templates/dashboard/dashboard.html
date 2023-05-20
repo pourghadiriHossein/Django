@@ -1,0 +1,362 @@
+{% load static %}
+{% load tools %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Poulstar</title>
+    <link rel="stylesheet" href="{% static '/CSS/Dashboard.css' %}">
+    <script src="{% static '/JS/Dashboard.js' %}" defer></script>
+</head>
+<body>
+    
+
+    <div class="right-side-menu">
+        <div class="menu-title">
+            <p class="p-white">داشبورد</p>
+        </div>
+        <div class="section">
+            <ul class="menu-list">
+                <li class="list-item">
+                    <button class="list-btn">پروفایل</button>
+                    <div class="items">
+                        <a class="a-style item" onclick="showContent('content-profile')">اطلاعات شخصی</a>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <button class="list-btn">آدرس ها</button>
+                    <div class="items">
+                        <a class="a-style item" onclick="showContent('content-address')">لیست آدرس</a>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <button class="list-btn">نظر ها</button>
+                    <div class="items">
+                        <a class="a-style item" onclick="showContent('content-comment')">لیست نظر</a>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <button class="list-btn">فاکتور ها</button>
+                    <div class="items">
+                        <a class="a-style item" onclick="showContent('content-order')">لیست فاکتور</a>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <button class="list-btn">تراکنش ها</button>
+                    <div class="items">
+                        <a class="a-style item" onclick="showContent('content-transaction')">لیست تراکنش</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="top-nav">
+        <div class="top-nav-bar">
+            <ul class="ul-style">
+                <a class="a-style" href="{% url 'home' %}"><li class="li-style">صفحه اصلی</li></a>
+                <a class="a-style" href="{% url 'logout' %}"><li class="li-style">خروج</li></a>
+            </ul>
+        </div>
+        <div class="top-nav-title">
+            <p class="p-white">
+                {% if user.is_authenticated %}
+                {{ user.username }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    <div class="content-base">
+
+        <div id="content-profile" class="content-hidden-start" data-type="content">
+            <div class="visit-part">
+                <div class="image-box">
+                    <img src="{% static '/IMAGE/avatar/avatar.png' %}" alt="avatar">
+                </div>
+                <div class="data-part">
+                    <table>
+                        <tr>
+                            <th class="first">نام کاربری</th>
+                            <th class="second">{{ user.username }}</th>
+                        </tr>
+                        <tr>
+                            <th class="first">شماره تماس</th>
+                            <th class="second">{{ user.phone }}</th>
+                        </tr>
+                        <tr>
+                            <th class="first">پست الکترونیک</th>
+                            <th class="second">{{ user.email }}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">
+                                <button class="update-profile" onclick="openDialogBox('profile-dialog-box')">ویرایش</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="profile-dialog-box" id="profile-dialog-box">
+                    <div class="close-box" onclick="closeDialogBox('profile-dialog-box')">&#x2715;</div>
+                    <div class="profile-dialog-box-content">
+                        {% if messages %}
+                        <ul class="message-box">
+                            {% for message in messages %}
+                            <li class="alert alert-{{message.tags}}">{{message}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form action="{% url 'update_profile' %}" autocomplete="on" method="post">
+                            {% csrf_token %}
+                            <input value="{{ user }}" type="text" name="username" placeholder="نام کاربری خود را وارد کنید">
+                            <input value="{{ user.phone }}" type="text" name="phone" placeholder="شماره تماس خود را وارد کنید">
+                            <input value="{{ user.email }}" type="text" name="email" placeholder="پست الکترونیک خود را وارد کنید">
+                            <input type="submit" value="ارسال کن">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-address" class="content-hidden-start" data-type="content">
+            <div class="visit-part">
+                <table class="address">
+                    <thead>
+                        <tr>
+                            <th>شناسه</th>
+                            <th>استان</th>
+                            <th>شهر</th>
+                            <th>جزئیات آدرس</th>
+                            <th colspan="2">امکانات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for address in addresses %}
+                        <tr>
+                            <td>{{ address.id }}</td>
+                            <td>{{ address.city_id.region_id.label }}</td>
+                            <td>{{ address.city_id }}</td>
+                            <td>{{ address.detail }}</td>
+                            <td>
+                                <button class="table-btn warning" onclick="openDialogBox('address-dialog-box-update-{{ address.id }}')">ویرایش</button>
+                            </td>
+                            <td>
+                                <button class="table-btn danger" onclick="openDialogBox('address-dialog-box-delete-{{ address.id }}')">حذف</button>
+                            </td>
+                            <div class="address-dialog-box-update" id="address-dialog-box-update-{{ address.id }}">
+                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-update-{{ address.id }}')">&#x2715;</div>
+                                <div class="profile-dialog-box-content">
+                                    {% if messages %}
+                                    <ul class="message-box">
+                                        {% for message in messages %}
+                                        <li class="alert alert-{{message.tags}}">{{message}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    <form action="{% url 'update_address' address.id %}" autocomplete="on" method="post">
+                                        {% csrf_token %}
+                                        <input value="{{ address.city_id.region_id.id }}" name="region_id" list="region" placeholder="استان خود را انتخاب کنید">
+                                        <datalist id="region">
+                                            {% for region in regions %}
+                                            <option value="{{ region.id }}">{{ region.label }}</option>
+                                            {% endfor %}
+                                        </datalist>
+                                        <input value="{{ address.city_id.id }}" name="city_id" list="city" placeholder="شهر خود را انتخاب کنید">
+                                        <datalist id="city">
+                                            {% for city in cities %}
+                                            <option value="{{ city.id }}">{{ city.label }}</option>
+                                            {% endfor %}
+                                        </datalist>
+                                        <input value="{{ address.detail }}" type="text" name="detail" placeholder="جزئیات آدرس خود را وارد کنید">
+                                        <input type="submit" value="ارسال کن">
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="address-dialog-box-delete" id="address-dialog-box-delete-{{ address.id }}">
+                                <div class="close-box" onclick="closeDialogBox('address-dialog-box-delete-{{ address.id }}')">&#x2715;</div>
+                                <div class="profile-dialog-box-content">
+                                    <p>آدرس مورد نظر پاک شود؟</p>
+                                    <hr>
+                                    <p>هشدار! در صورت پاک شدن آدرس مورد نظر؛ امکان بازگشت وجود ندارد.</p>
+                                    <hr>
+                                    <a href="{% url 'delete_address' address.id %}" class="a-style danger confirm">آری</a>
+                                    <a class="a-style success confirm" onclick="closeDialogBox('address-dialog-box-delete-{{ address.id }}')">خیر</a>
+                                </div>
+                            </div>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="content-comment" class="content-hidden-start" data-type="content">
+            <div class="visit-part">
+                <table class="address">
+                    <thead>
+                        <tr>
+                            <th>شناسه</th>
+                            <th>نام محصول</th>
+                            <th>نظر ارائه شده</th>
+                            <th>وضعیت</th>
+                            <th>امکانات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comment in comments %}
+                        <tr>
+                            <td>{{ comment.id }}</td>
+                            <td>{{ comment.product_id.label }}</td>
+                            <td>{{ comment.description }}</td>
+                            <td>
+                                {% if comment.status == 1 %}
+                                <button class="table-btn success">فعال</button>
+                                {% else %}
+                                <button class="table-btn danger">غیرفعال</button>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="table-btn danger" onclick="openDialogBox('comment-dialog-box-delete-{{ comment.id }}')">حذف</button>
+                            </td>
+                            <div class="comment-dialog-box-delete" id="comment-dialog-box-delete-{{ comment.id }}">
+                                <div class="close-box" onclick="closeDialogBox('comment-dialog-box-delete-{{ comment.id }}')">&#x2715;</div>
+                                <div class="profile-dialog-box-content">
+                                    <p>نظر مورد نظر پاک شود؟</p>
+                                    <hr>
+                                    <p>هشدار! در صورت پاک شدن نظر مورد نظر؛ امکان بازگشت وجود ندارد.</p>
+                                    <hr>
+                                    <a href="{% url 'delete_comment' comment.id %}" class="a-style danger confirm">آری</a>
+                                    <a class="a-style success confirm" onclick="closeDialogBox('comment-dialog-box-delete-{{ comment.id }}')">خیر</a>
+                                </div>
+                            </div>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="content-order" class="content-hidden-start" data-type="content">
+            <div class="visit-part">
+                <table class="address">
+                    <thead>
+                        <tr>
+                            <th>شناسه</th>
+                            <th>جزئیات آدرس</th>
+                            <th>کد تخفیف</th>
+                            <th>مبلغ کل</th>
+                            <th>مبلغ پرداختی</th>
+                            <th>لیست خرید</th>
+                            <th>وضعیت</th>
+                            <th>امکانات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>
+                                {{ order.address_id.city_id.region_id.label }} - 
+                                {{ order.address_id.city_id.label }} - 
+                                {{ order.address_id.detail }}
+                            </td>
+                            <td>
+                                {% if order.discount_id %}
+                                {{ order.discount_id.label }}
+                                {% else %}
+                                تخفیف ندارد
+                                {% endif %}
+                            </td>
+                            <td>{{ order.total_price }} ريال</td>
+                            <td>{{ order.pay_price }} ريال</td>
+                            <td>
+                                <button class="table-btn info" onclick="openDialogBox('order-dialog-box-detail-{{ order.id }}')">محصولات</button>
+                            </td>
+                            <td>
+                                {% if order.status == 1 %}
+                                <button class="table-btn success">فعال</button>
+                                {% else %}
+                                <button class="table-btn danger">غیر فعال</button>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if order.status == 1 %}
+                                <button class="table-btn success">پرداخت شده</button>
+                                {% else %}
+                                <button class="table-btn warning"><a href="{% url 'start_getway' order.pay_price|showPrice order.user_id.phone order.id %}" style="text-decoration: none; color: inherit;">پرداخت</a></button>
+                                {% endif %}
+                            </td>
+                            <div class="order-dialog-box-update" id="order-dialog-box-detail-{{ order.id }}">
+                                <div class="close-box" onclick="closeDialogBox('order-dialog-box-detail-{{ order.id }}')">&#x2715;</div>
+                                <div class="profile-dialog-box-content">
+                                    <div class="product-title">
+                                        <span class="product-title-item" style="width: 10%;">شناسه</span>
+                                        <span class="product-title-item" style="width: 20%;">نام محصول</span>
+                                        <span class="product-title-item" style="width: 20%;">مبلغ اصلی</span>
+                                        <span class="product-title-item" style="width: 20%;">مبلغ با تخفیف</span>
+                                        <span class="product-title-item" style="width: 10%;">تعداد</span>
+                                        <span class="product-title-item" style="width: 20%;">مبلغ پرداخت شده</span>
+                                    </div>
+                                    {% for orderItem in order.order_list_item.all %}
+                                    <div class="product-items">
+                                        <span class="product-body-item" style="width: 10%;">{{ orderItem.id }}</span>
+                                        <span class="product-body-item" style="width: 20%;">{{ orderItem.product_id.label }}</span>
+                                        <span class="product-body-item" style="width: 20%;">{{ orderItem.total_price }} ريال</span>
+                                        <span class="product-body-item" style="width: 20%;">{{ orderItem.pay_price }} ريال</span>
+                                        <span class="product-body-item" style="width: 10%;">1</span>
+                                        <span class="product-body-item" style="width: 20%;">{{ orderItem.pay_price }} ريال</span>
+                                    </div> 
+                                    {% endfor %} 
+                                </div>
+                            </div>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="content-transaction" class="content-hidden-start" data-type="content">
+            <div class="visit-part">
+                <table class="address">
+                    <thead>
+                        <tr>
+                            <th>شناسه</th>
+                            <th>شناسه فاکتور</th>
+                            <th>بانک انتخابی</th>
+                            <th>مبلغ پرداخت شده</th>
+                            <th>کد رهگیری</th>
+                            <th>شناسه رهگیری</th>
+                            <th>تاریخ پرداخت</th>
+                            <th>تاریخ تایید پرداخت</th>
+                            <th>وضعیت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.pk }}</td>
+                            <td>{{ transaction.order_id.id }}</td>
+                            <td>{{ transaction.bank_type }}</td>
+                            <td>{{ transaction.amount }} ريال</td>
+                            <td>{{ transaction.tracking_code }}</td>
+                            <td>{{ transaction.reference_number }}</td>
+                            <td style="direction: ltr;">{{ transaction.created_at }}</td>
+                            <td style="direction: ltr;">{{ transaction.update_at }}</td>
+                            <td>
+                                {% if transaction.status == 'Complete' %}
+                                <button class="table-btn success">موفق</button>
+                                {% else %}
+                                <button class="table-btn danger">ناموفق</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>
